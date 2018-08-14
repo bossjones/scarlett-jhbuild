@@ -3,6 +3,8 @@
 <?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
 <moduleset>
 
+<!-- SOURCE: gnome-suites-core-deps-3.24 -->
+
 <!-- git repos -->
 <repository type="git" name="git.gnome.org" default="yes"
     href="git://git.gnome.org/"/>
