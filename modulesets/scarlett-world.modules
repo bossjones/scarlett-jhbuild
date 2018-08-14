@@ -229,21 +229,7 @@
             <dep package="vala"/>
         </suggests>
     </autotools>
-    <!-- <autotools id="gconf" -->
 
-    <!-- <autotools id="libva"> -->
-
-    <!-- <autotools id="gstreamer-vaapi"> -->
-
-    <!-- <autotools id="gst-libav" -->
-
-    <!-- <autotools id="gst-python"> -->
-
-    <!-- <autotools id="gst-python-0.10" -->
-
-    <!-- Python 2 build of pygobject, until everything gets ported to Python 3 -->
-    <!-- <autotools id="pygobject-python2" autogenargs="--with-python=python2"> -->
-    <!-- Python 3 build of pygobject -->
     <autotools id="pygobject" autogenargs="--with-python=python3">
         <branch revision="pygobject-3-24"/>
         <dependencies>
