@@ -37,6 +37,6 @@ link_modulesets:
 	@for file in $(shell find $(CURDIR)/modulesets -name "*scarlett*modules" -print); do \
 		echo $$file; \
 		f=$$(basename $$file); \
-		ln -sfn $$file $$HOME/jhbuild/modulesets/$f; \
+		cp -fv $$file $$HOME/jhbuild/modulesets/$f; \
 	done; \
 	ls -lta $$HOME/jhbuild/modulesets/$f; \
