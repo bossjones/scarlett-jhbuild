@@ -816,7 +816,7 @@
             <dep package="gst-plugins-good"/>
             <dep package="gst-plugins-ugly"/>
             <dep package="gst-python"/>
-            <dep package="gtk+"/>
+            <dep package="gtk+-3"/>
             <dep package="pycairo"/>
             <dep package="pygobject"/>
             <dep package="dbus"/>
@@ -853,12 +853,14 @@
             <dep package="gst-plugins-good"/>
             <dep package="gst-plugins-ugly"/>
             <dep package="gst-python"/>
-            <dep package="gtk+"/>
+            <dep package="gtk+-3"/>
             <dep package="pycairo"/>
             <dep package="pygobject"/>
             <dep package="dbus"/>
             <dep package="dbus-glib"/>
             <dep package="espeak"/>
+            <dep package="sphinxbase"/>
+            <dep package="pocketsphinx"/>
         </dependencies>
     </autotools>
 </moduleset>
