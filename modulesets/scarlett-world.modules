@@ -230,6 +230,143 @@
         </suggests>
     </autotools>
 
+
+
+    <distutils id="pycairo" python3="1">
+        <branch repo="github.com" module="pygobject/pycairo.git" checkoutdir="pycairo-python3"/>
+        <dependencies>
+            <dep package="python3-devel"/>
+        </dependencies>
+    </distutils>
+
+    <autotools id="gst-python" autogenargs="PYTHON=python3">
+        <branch repo="gstreamer.freedesktop.org"/>
+        <dependencies>
+            <dep package="pygobject"/>
+            <dep package="gstreamer"/>
+            <dep package="gst-plugins-base"/>
+        </dependencies>
+    </autotools>
+
+    <autotools id="gst-plugins-ugly" autogenargs="-- --disable-tests" supports-non-srcdir-builds="no">
+        <branch repo="gstreamer.freedesktop.org" module="gst-plugins-ugly"/>
+        <dependencies>
+            <dep package="gstreamer"/>
+            <dep package="gst-plugins-base"/>
+        </dependencies>
+    </autotools>
+
+    <autotools id="pulseaudio" autogenargs="--disable-udev --disable-hal --disable-oss">
+        <pkg-config>libpulse.pc</pkg-config>
+        <branch repo="freedesktop.org" module="software/pulseaudio/releases/pulseaudio-1.0.tar.xz" version="1.0" hash="sha256:e63464f8a0975446e2b4cfe768b615a66735c8d092b2366d2bdc7a2a04a249be" size="1305008"/>
+        <dependencies>
+            <dep package="json"/>
+            <dep package="libsndfile"/>
+            <dep package="liboil"/>
+            <dep package="glib"/>
+            <dep package="speex"/>
+        </dependencies>
+        <after>
+            <dep package="libsamplerate"/>
+            <dep package="gconf"/>
+            <dep package="avahi"/>
+            <dep package="bluez"/>
+            <dep package="dbus"/>
+            <dep package="polkit"/>
+        </after>
+    </autotools>
+
+    <meson id="graphene">
+        <branch repo="github.com" checkoutdir="graphene" module="ebassi/graphene.git"/>
+        <dependencies>
+            <dep package="glib"/>
+            <dep package="gobject-introspection"/>
+        </dependencies>
+    </meson>
+
+    <systemmodule id="libxkbcommon">
+        <pkg-config>xkbcommon.pc</pkg-config>
+        <branch repo="system" version="0.5.0"/>
+    </systemmodule>
+
+    <meson id="at-spi2-atk">
+        <branch/>
+        <dependencies>
+            <dep package="dbus"/>
+            <dep package="glib"/>
+            <dep package="atk"/>
+            <dep package="libxml2"/>
+            <dep package="at-spi2-core"/>
+        </dependencies>
+    </meson>
+
+    <meson id="at-spi2-core">
+        <if condition-unset="x11">
+            <mesonargs value="-Denable-x11=false"/>
+        </if>
+        <branch/>
+        <dependencies>
+            <dep package="dbus"/>
+            <dep package="glib"/>
+            <dep package="gobject-introspection"/>
+            <if condition-set="x11">
+                <dep package="libXtst"/>
+                <dep package="x11"/>
+                <dep package="xi"/>
+                <dep package="xkbcommon-x11"/>
+            </if>
+        </dependencies>
+    </meson>
+
+    <meson id="dconf">
+        <branch/>
+        <dependencies>
+            <dep package="glib"/>
+            <dep package="dbus"/>
+            <dep package="vala"/>
+        </dependencies>
+    </meson>
+
+    <autotools id="harfbuzz" autogenargs="">
+        <branch repo="github.com" module="behdad/harfbuzz" checkoutdir="harfbuzz"/>
+        <dependencies>
+            <dep package="c++"/>
+            <dep package="freetype2"/>
+            <dep package="glib"/>
+            <dep package="libicu"/>
+            <dep package="ragel"/>
+        </dependencies>
+    </autotools>
+
+    <autotools id="gst-libav">
+        <branch repo="git.freedesktop.org" checkoutdir="gst-libav" module="gstreamer/gst-libav"/>
+        <dependencies>
+            <dep package="gst-plugins-base"/>
+        </dependencies>
+        <suggests>
+            <dep package="yasm"/>
+        </suggests>
+    </autotools>
+
+    <autotools id="atk">
+        <branch revision="gnome-3-24"/>
+        <dependencies>
+            <dep package="glib"/>
+            <dep package="gobject-introspection"/>
+            <dep package="gtk-doc"/>
+        </dependencies>
+    </autotools>
+
+
+    <autotools id="gstreamer" autogenargs="--disable-tests --disable-fatal-warnings" supports-non-srcdir-builds="no">
+        <branch repo="gstreamer.freedesktop.org" module="gstreamer" checkoutdir="gstreamer"/>
+        <dependencies>
+            <dep package="glib"/>
+            <dep package="libxml2"/>
+            <dep package="gobject-introspection"/>
+        </dependencies>
+    </autotools>
+
     <autotools id="pygobject" autogenargs="--with-python=python3">
         <branch revision="pygobject-3-24"/>
         <dependencies>
