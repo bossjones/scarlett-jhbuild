@@ -1,0 +1,26 @@
+_basepath = os.path.dirname(__file__)
+
+moduleset = [os.path.join(_basepath, 'modulesets/buildtools.modules'), os.path.join(_basepath, 'modulesets/gstreamer.modules')]
+
+modules = ['buildtools', 'gst']
+
+checkoutroot = os.path.join(_basepath, 'build')
+prefix = os.path.join(_basepath, 'install')
+
+build_policy = 'updated-deps'
+
+os.environ['LDFLAGS'] = '-Wl,-rpath,' + os.path.join(prefix, 'lib') \
+                        + ' -Wl,-rpath,' + os.path.join(prefix, 'lib64') \
+                        + os.environ.get('LDFLAGS', '')
+
+addpath('PKG_CONFIG_PATH', os.path.join(prefix, 'lib/pkgconfig'))
+addpath('PKG_CONFIG_PATH', os.path.join(prefix, 'lib64/pkgconfig'))
+addpath('PKG_CONFIG_PATH', '/usr/lib/pkgconfig')
+addpath('PKG_CONFIG_PATH', '/usr/share/pkgconfig')
+
+# custom CFLAGS for OSX gcc
+from sys import platform as _platform
+if _platform == "darwin":
+  os.environ['CFLAGS'] = '-Wno-typedef-redefinition -Wno-error=unused-command-line-argument'
+  os.environ['OBJCFLAGS'] = '-Wno-error=deprecated-declarations'
+  skip = ['libasound', 'libxv']
