@@ -38,6 +38,9 @@
     <repository type="tarball" name="spice" href="http://www.spice-space.org/download/"/>
     <repository type="tarball" name="people.mozilla.org" href="https://people.mozilla.org/~sstangl/"/>
 
+    <repository type="system" name="system"/>
+
+
     <include href="gnome-sysdeps-3.24.modules"/>
 
     <!-- Please try to keep organized alphabetically -->
