@@ -45,6 +45,30 @@
 
     <!-- Please try to keep organized alphabetically -->
 
+    <autotools id="glib" autogenargs="--enable-installed-tests --disable-libmount">
+        <if condition-set="freebsd">
+            <autogenargs value="--disable-dtrace --with-libiconv=gnu"/>
+        </if>
+        <if condition-set="macos">
+            <autogenargs value="--with-pcre=internal"/>
+        </if>
+        <branch revision="glib-2-52"/>
+        <dependencies>
+            <dep package="gettext"/>
+            <dep package="gtk-doc"/>
+            <dep package="libffi"/>
+            <dep package="zlib"/>
+            <if condition-unset="macos">
+                <dep package="libpcre"/>
+            </if>
+        </dependencies>
+        <after>
+            <if condition-unset="macos">
+                <dep package="shared-mime-info"/>
+            </if>
+        </after>
+    </autotools>
+
     <autotools id="yelp-tools">
         <branch/>
         <dependencies>
