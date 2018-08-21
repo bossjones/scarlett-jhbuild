@@ -40,3 +40,6 @@ link_modulesets:
 		cp -fv $$file $$HOME/jhbuild/modulesets/$f; \
 	done; \
 	ls -lta $$HOME/jhbuild/modulesets/$f; \
+
+render_jhbuildrc:
+	@tools/render_jhbuild.py --cmd render

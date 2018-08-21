@@ -92,7 +92,7 @@
             hash="sha256:c313bee371d4d255be2b4e96fd59b11d58bc550a7c78c021444ae565709a656b"/>
   </autotools>
 
-  <autotools id="python" autogenargs="--enable-shared --enable-loadable-sqlite-extensions --with-pydebug" autogen-sh="configure">
+  <autotools id="python" autogenargs="--enable-shared --enable-loadable-sqlite-extensions --with-pydebug --prefix=%(prefix)s" autogen-sh="configure">
     <pkg-config>python-3.6.pc</pkg-config>
     <branch repo="python" module="${version}/Python-${version}.tar.xz"
             version="3.6.5">

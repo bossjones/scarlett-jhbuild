@@ -41,6 +41,7 @@ JHBUILD_TEMPLATE = """
 import os
 prefix='{PREFIX}'
 checkoutroot='{CHECKOUTROOT}'
+modulesets_dir = '{PREFIX}/modulesets'
 moduleset = '{PREFIX}/modulesets/scarlett-world.modules'
 modules = ['{PREFIX}/modulesets/gnome-sysdeps-3.26.modules', '{PREFIX}/modulesets/scarlett-world-deps.modules']
 interact = False
