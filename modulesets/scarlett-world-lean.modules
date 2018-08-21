@@ -37,6 +37,8 @@
     <repository type="tarball" name="speech-dispatcher" href="http://devel.freebsoft.org/pub/projects/speechd/"/>
     <repository type="tarball" name="spice" href="http://www.spice-space.org/download/"/>
     <repository type="tarball" name="people.mozilla.org" href="https://people.mozilla.org/~sstangl/"/>
+    <repository type="tarball" name="python" href="http://www.python.org/ftp/python/"/>
+
 
     <repository type="system" name="system"/>
 
