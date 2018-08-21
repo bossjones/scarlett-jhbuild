@@ -45,6 +45,28 @@
 
     <!-- Please try to keep organized alphabetically -->
 
+    <autotools id="yelp-tools">
+        <branch/>
+        <dependencies>
+            <dep package="libxslt"/>
+            <dep package="libxml2"/>
+            <dep package="yelp-xsl"/>
+            <dep package="itstool"/>
+            <dep package="xmllint"/>
+            <dep package="xsltproc"/>
+        </dependencies>
+    </autotools>
+
+    <autotools id="yelp-xsl">
+        <branch/>
+        <dependencies>
+            <dep package="libxslt"/>
+            <dep package="libxml2"/>
+            <dep package="intltool"/>
+            <dep package="itstool"/>
+        </dependencies>
+    </autotools>
+
     <autotools id="gtk-doc">
         <branch/>
         <dependencies>
