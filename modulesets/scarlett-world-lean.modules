@@ -45,6 +45,25 @@
 
     <!-- Please try to keep organized alphabetically -->
 
+
+
+    <autotools id="python-352" autogenargs="--enable-shared --with-pydebug --enable-loadable-sqlite-extensions" autogen-sh="configure">
+        <pkg-config>python-3.5.pc</pkg-config>
+        <branch repo="python" module="${version}/Python-${version}.tar.xz" version="3.5.2" hash="sha256:0010f56100b9b74259ebcd5d4b295a32324b58b517403a10d1a2aa7cb22bca40"/>
+    </autotools>
+
+
+    <autotools id="gobject-introspection" autogenargs="--with-python=python3">
+        <branch revision="cee2a4f215d5edf2e27b9964d3cfcb28a9d4941c"/>
+        <dependencies>
+            <dep package="bison"/>
+            <dep package="flex"/>
+            <dep package="glib"/>
+            <dep package="cairo"/>
+            <dep package="python-352"/>
+        </dependencies>
+    </autotools>
+
     <autotools id="glib" autogenargs="--enable-installed-tests --disable-libmount">
         <if condition-set="freebsd">
             <autogenargs value="--disable-dtrace --with-libiconv=gnu"/>
@@ -52,7 +71,7 @@
         <if condition-set="macos">
             <autogenargs value="--with-pcre=internal"/>
         </if>
-        <branch revision="glib-2-52"/>
+        <branch revision="eaca4f4116801f99e30e42a857559e19a1e6f4ce"/>
         <dependencies>
             <dep package="gettext"/>
             <dep package="gtk-doc"/>
