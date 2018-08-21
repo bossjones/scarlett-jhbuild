@@ -1,0 +1,443 @@
+<?xml version="1.0" standalone="no"?><!--*- mode: nxml -*-->
+<!DOCTYPE moduleset SYSTEM "moduleset.dtd">
+<?xml-stylesheet type="text/xsl" href="moduleset.xsl"?>
+<moduleset>
+
+    <!-- git repos -->
+    <repository type="git" name="git.gnome.org" default="yes" href="git://git.gnome.org/"/>
+    <repository type="git" name="git.freedesktop.org" href="git://anongit.freedesktop.org/"/>
+    <repository type="git" name="gstreamer.freedesktop.org" href="git://anongit.freedesktop.org/gstreamer/"/>
+    <repository type="git" name="telepathy.freedesktop.org" href="git://anongit.freedesktop.org/telepathy/"/>
+    <repository type="git" name="wayland.freedesktop.org" href="git://anongit.freedesktop.org/git/wayland"/>
+    <repository type="git" name="xorg.freedesktop.org" href="git://anongit.freedesktop.org/git/xorg"/>
+    <repository type="git" name="github.com" href="git://github.com/"/>
+    <repository type="git" name="linuxwacom.git.sourceforge.net" href="git://linuxwacom.git.sourceforge.net/"/>
+    <repository type="git" name="quvi" href="git://repo.or.cz/"/>
+    <repository type="git" name="gitlab.com" href="https://gitlab.com/"/>
+    <repository type="git" name="git.libvirt.org" href="git://libvirt.org/"/>
+
+    <!-- tarball repos -->
+    <repository type="tarball" name="cairo.org" href="http://cairographics.org/"/>
+    <repository type="tarball" name="iso-codes" href="http://pkg-isocodes.alioth.debian.org/downloads/"/>
+    <repository type="tarball" name="sourceforge.net" href="http://sourceforge.net/projects/"/>
+    <repository type="tarball" name="webkitgtk.org" href="http://webkitgtk.org/releases/"/>
+    <repository type="tarball" name="freedesktop.org" href="http://freedesktop.org/software/"/>
+    <repository type="tarball" name="people.freedesktop.org" href="http://people.freedesktop.org/"/>
+    <repository type="tarball" name="icon-theme.freedesktop.org" href="http://icon-theme.freedesktop.org/releases/"/>
+    <repository type="tarball" name="nice.freedesktop.org" href="http://nice.freedesktop.org/releases/"/>
+    <repository type="tarball" name="ftp.mozilla.org" href="http://ftp.mozilla.org/"/>
+    <repository type="tarball" name="kernel.org" href="http://www.kernel.org"/>
+    <repository type="tarball" name="ftp.gnu.org" href="http://ftp.gnu.org/gnu/"/>
+    <repository type="tarball" name="mir" href="https://launchpad.net/mir/"/>
+    <repository type="tarball" name="xorg-tar" href="http://xorg.freedesktop.org/"/>
+    <repository type="tarball" name="github-tar" href="https://github.com/"/>
+    <repository type="tarball" name="libxkbcommon" href="http://xkbcommon.org/download/"/>
+    <repository type="tarball" name="tarball.github.com" href="https://github.com/"/>
+    <repository type="tarball" name="pcre" href="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/"/>
+    <repository type="tarball" name="speech-dispatcher" href="http://devel.freebsoft.org/pub/projects/speechd/"/>
+    <repository type="tarball" name="spice" href="http://www.spice-space.org/download/"/>
+    <repository type="tarball" name="people.mozilla.org" href="https://people.mozilla.org/~sstangl/"/>
+
+    <repository type="system" name="system"/>
+
+
+    <!-- Please try to keep organized alphabetically -->
+
+    <autotools id="gettext" autogen-sh="configure">
+        <branch repo="ftp.gnu.org" module="gettext/gettext-0.19.8.1.tar.xz" version="0.19.8.1" size="7209808" hash="sha256:105556dbc5c3fbbc2aa0edb46d22d055748b6f5c7cd7a8d99f8e7eb84e938be4">
+        </branch>
+    </autotools>
+
+    <autotools id="glib" autogenargs="--enable-installed-tests --disable-libmount">
+        <if condition-set="freebsd">
+            <autogenargs value="--disable-dtrace --with-libiconv=gnu"/>
+        </if>
+        <if condition-set="macos">
+            <autogenargs value="--with-pcre=internal"/>
+        </if>
+        <branch revision="glib-2-52"/>
+        <dependencies>
+            <dep package="gettext"/>
+            <dep package="gtk-doc"/>
+            <dep package="libffi"/>
+            <dep package="zlib"/>
+            <if condition-unset="macos">
+                <dep package="libpcre"/>
+            </if>
+        </dependencies>
+        <after>
+            <if condition-unset="macos">
+                <dep package="shared-mime-info"/>
+            </if>
+        </after>
+    </autotools>
+
+    <!-- This is a special module: it's needed to build from git, but not
+        needed to build from tarballs, so it doesn't need to be in our suites
+        and it doesn't need to be an external dependency -->
+    <autotools id="gnome-common">
+        <branch/>
+    </autotools>
+
+
+    <autotools id="gobject-introspection" autogenargs="--with-python=python3">
+        <branch revision="gnome-3-24"/>
+        <dependencies>
+            <dep package="bison"/>
+            <dep package="flex"/>
+            <dep package="glib"/>
+            <dep package="cairo"/>
+            <dep package="python3-devel"/>
+        </dependencies>
+    </autotools>
+
+    <distutils id="pycairo" python3="1">
+        <branch repo="github.com" module="pygobject/pycairo.git" checkoutdir="pycairo-python3"/>
+        <dependencies>
+            <dep package="python3-devel"/>
+        </dependencies>
+    </distutils>
+
+    <autotools id="gst-python" autogenargs="PYTHON=python3">
+        <branch repo="gstreamer.freedesktop.org"/>
+        <dependencies>
+            <dep package="pygobject"/>
+            <dep package="gstreamer"/>
+            <dep package="gst-plugins-base"/>
+        </dependencies>
+    </autotools>
+
+    <autotools id="gst-plugins-ugly" autogenargs="-- --disable-tests" supports-non-srcdir-builds="no">
+        <branch repo="gstreamer.freedesktop.org" module="gst-plugins-ugly"/>
+        <dependencies>
+            <dep package="gstreamer"/>
+            <dep package="gst-plugins-base"/>
+        </dependencies>
+    </autotools>
+
+    <autotools id="gst-libav">
+        <branch repo="git.freedesktop.org" checkoutdir="gst-libav" module="gstreamer/gst-libav"/>
+        <dependencies>
+            <dep package="gst-plugins-base"/>
+        </dependencies>
+        <suggests>
+            <dep package="yasm"/>
+        </suggests>
+    </autotools>
+
+    <autotools id="gstreamer" autogenargs="--disable-tests --disable-fatal-warnings" supports-non-srcdir-builds="no">
+        <branch repo="gstreamer.freedesktop.org" module="gstreamer" checkoutdir="gstreamer"/>
+        <dependencies>
+            <dep package="glib"/>
+            <dep package="libxml2"/>
+            <dep package="gobject-introspection"/>
+        </dependencies>
+    </autotools>
+
+    <autotools id="gst-plugins-bad" autogenargs="--disable-fatal-warnings" supports-non-srcdir-builds="no">
+        <branch repo="gstreamer.freedesktop.org" checkoutdir="gst-plugins-bad" module="gst-plugins-bad"/>
+        <dependencies>
+            <dep package="gstreamer"/>
+            <dep package="gst-plugins-base"/>
+        </dependencies>
+        <suggests>
+            <dep package="graphene"/>
+        </suggests>
+    </autotools>
+
+    <autotools id="gst-plugins-base" autogenargs="--disable-fatal-warnings" supports-non-srcdir-builds="no">
+        <branch repo="gstreamer.freedesktop.org" module="gst-plugins-base" checkoutdir="gst-plugins-base"/>
+        <dependencies>
+            <dep package="gstreamer"/>
+            <dep package="gtk+-3"/>
+            <dep package="iso-codes"/>
+        </dependencies>
+        <suggests>
+            <if condition-set="linux">
+                <dep package="gudev"/>
+            </if>
+        </suggests>
+    </autotools>
+
+    <autotools id="gst-plugins-good" autogenargs="--disable-fatal-warnings" supports-non-srcdir-builds="no">
+        <branch repo="gstreamer.freedesktop.org" module="gst-plugins-good" checkoutdir="gst-plugins-good"/>
+        <dependencies>
+            <dep package="gstreamer"/>
+            <dep package="gst-plugins-base"/>
+            <dep package="flac"/>
+            <dep package="libvpx"/>
+            <dep package="taglib"/>
+            <dep package="wavpack"/>
+            <if condition-unset="macos">
+                <dep package="libv4l"/>
+            </if>
+        </dependencies>
+        <suggests>
+            <dep package="pulseaudio"/>
+            <dep package="gdk-pixbuf"/>
+            <if condition-set="linux">
+                <dep package="gudev"/>
+            </if>
+        </suggests>
+    </autotools>
+
+    <autotools id="gtk+" autogenargs="--enable-broadway-backend --enable-installed-tests">
+        <if condition-set="x11">
+            <autogenargs value="--enable-x11-backend"/>
+        </if>
+        <if condition-set="wayland">
+            <autogenargs value="--enable-wayland-backend"/>
+        </if>
+        <if condition-set="mir">
+            <autogenargs value="--enable-mir-backend"/>
+        </if>
+        <if condition-set="quartz">
+            <autogenargs value="--enable-quartz-backend"/>
+        </if>
+        <branch/>
+        <dependencies>
+            <dep package="atk"/>
+            <dep package="glib"/>
+            <dep package="cairo"/>
+            <dep package="pango"/>
+            <dep package="gdk-pixbuf"/>
+            <dep package="gtk-doc"/>
+            <dep package="gobject-introspection"/>
+            <dep package="graphene"/>
+            <dep package="libepoxy"/>
+            <dep package="m4-common"/>
+            <if condition-unset="quartz">
+                <dep package="at-spi2-atk"/>
+            </if>
+            <if condition-set="wayland">
+                <dep package="libxkbcommon"/>
+                <dep package="wayland"/>
+                <dep package="wayland-egl"/>
+                <dep package="wayland-protocols"/>
+            </if>
+            <if condition-set="mir">
+                <dep package="mir"/>
+            </if>
+        </dependencies>
+        <suggests>
+            <!-- Many GTK+ apps require desktop-file-validate. -->
+            <dep package="desktop-file-utils"/>
+            <dep package="shared-mime-info"/>
+        </suggests>
+    </autotools>
+
+    <autotools id="gtk+-3" autogenargs="--enable-broadway-backend --enable-installed-tests">
+        <if condition-set="x11">
+            <autogenargs value="--enable-x11-backend"/>
+        </if>
+        <if condition-set="wayland">
+            <autogenargs value="--enable-wayland-backend"/>
+        </if>
+        <if condition-set="mir">
+            <autogenargs value="--enable-mir-backend"/>
+        </if>
+        <if condition-set="quartz">
+            <autogenargs value="--enable-quartz-backend"/>
+        </if>
+        <branch checkoutdir="gtk+-3" module="gtk+" revision="gtk-3-22"/>
+        <dependencies>
+            <dep package="atk"/>
+            <dep package="glib"/>
+            <dep package="cairo"/>
+            <dep package="pango"/>
+            <dep package="gdk-pixbuf"/>
+            <dep package="gtk-doc"/>
+            <dep package="gobject-introspection"/>
+            <dep package="libepoxy"/>
+            <if condition-unset="quartz">
+                <dep package="at-spi2-atk"/>
+            </if>
+            <if condition-set="wayland">
+                <dep package="libxkbcommon"/>
+                <dep package="wayland"/>
+                <dep package="wayland-egl"/>
+                <dep package="wayland-protocols"/>
+            </if>
+            <if condition-set="mir">
+                <dep package="mir"/>
+            </if>
+        </dependencies>
+        <suggests>
+            <!-- Many GTK+ apps require desktop-file-validate. -->
+            <dep package="desktop-file-utils"/>
+            <dep package="shared-mime-info"/>
+        </suggests>
+    </autotools>
+
+    <autotools id="gtk-doc">
+        <branch/>
+        <dependencies>
+            <dep package="libxslt"/>
+            <dep package="yelp-tools"/>
+            <dep package="libtool"/>
+            <dep package="gettext"/>
+            <dep package="docbook-xml"/>
+            <dep package="docbook-xsl"/>
+            <dep package="cc"/>
+        </dependencies>
+    </autotools>
+
+
+    <autotools id="hicolor-icon-theme" supports-non-srcdir-builds="no" check-target="false">
+        <branch module="hicolor-icon-theme-0.15.tar.xz" version="0.15" repo="icon-theme.freedesktop.org" hash="sha256:9cc45ac3318c31212ea2d8cb99e64020732393ee7630fa6c1810af5f987033cc" size="51056">
+        </branch>
+    </autotools>
+
+
+    <autotools id="iso-codes">
+        <pkg-config>iso-codes.pc</pkg-config>
+        <branch repo="iso-codes" module="iso-codes-3.51.tar.xz" version="3.51" hash="sha256:5222f79d92ac021a56c7080616c13655c50f7b1ff1a31ec0308da14a684ad77f" size="3626932"/>
+    </autotools>
+
+    <!-- GNOME’s cache for autoconf-archive.
+       Please keep this comment for greppability. -->
+    <autotools id="m4-common">
+        <branch/>
+    </autotools>
+
+    <distutils id="meson" python3="1">
+        <branch repo="github.com" module="mesonbuild/meson.git" revision="0.39.1"/>
+        <dependencies>
+            <dep package="ninja"/>
+        </dependencies>
+    </distutils>
+
+    <autotools id="pango" autogenargs="--with-cairo --enable-installed-tests">
+        <branch/>
+        <dependencies>
+            <dep package="glib"/>
+            <dep package="cairo"/>
+            <dep package="gtk-doc"/>
+            <dep package="gobject-introspection"/>
+            <if condition-set="x11">
+                <dep package="libXft"/>
+            </if>
+            <if condition-unset="quartz">
+                <dep package="harfbuzz"/>
+                <dep package="fontconfig"/>
+            </if>
+        </dependencies>
+    </autotools>
+
+    <autotools id="pcre2" autogenargs="--enable-jit --enable-pcre2-8 --enable-pcre2-16 --enable-pcre2-32">
+        <branch repo="pcre" module="pcre2-${version}.tar.bz2" version="10.21" hash="sha256:c66a17509328a7251782691093e75ede7484a203ebc6bed3c08122b092ccd4e0" size="1455359"/>
+    </autotools>
+
+    <!-- Python 3 build of pygobject -->
+    <autotools id="pygobject" autogenargs="--with-python=python3">
+        <branch revision="pygobject-3-24"/>
+        <dependencies>
+            <dep package="gnome-common"/>
+            <dep package="glib"/>
+            <dep package="py3cairo"/>
+            <dep package="python3-devel"/>
+            <dep package="gobject-introspection"/>
+        </dependencies>
+    </autotools>
+
+    <autotools id="sound-theme-freedesktop">
+        <branch repo="people.freedesktop.org" module="~mccann/dist/sound-theme-freedesktop-0.8.tar.bz2" version="0.8" hash="sha256:cb518b20eef05ec2e82dda1fa89a292c1760dc023aba91b8aa69bafac85e8a14" size="478237"/>
+    </autotools>
+
+    <autotools id="speech-dispatcher" autogenargs="--with-espeak">
+        <branch repo="speech-dispatcher" module="speech-dispatcher-${version}.tar.gz" version="0.8" hash="sha256:0a6ce544cfbac8592a8ea08e3ab24c389153904ea51c6fd68756cea52de9efa2"/>
+        <dependencies>
+            <dep package="dotconf"/>
+            <dep package="espeak"/>
+        </dependencies>
+    </autotools>
+
+    <autotools id="yelp-tools">
+        <branch/>
+        <dependencies>
+            <dep package="libxslt"/>
+            <dep package="libxml2"/>
+            <dep package="yelp-xsl"/>
+            <dep package="itstool"/>
+            <dep package="xmllint"/>
+            <dep package="xsltproc"/>
+        </dependencies>
+    </autotools>
+
+    <autotools id="yelp-xsl">
+        <branch/>
+        <dependencies>
+            <dep package="libxslt"/>
+            <dep package="libxml2"/>
+            <dep package="intltool"/>
+            <dep package="itstool"/>
+        </dependencies>
+    </autotools>
+
+    <autotools id="zenity">
+        <branch revision="gnome-3-24"/>
+        <dependencies>
+            <dep package="gtk+-3"/>
+            <dep package="yelp-tools"/>
+        </dependencies>
+    </autotools>
+
+    <metamodule id="meta-scarlett-world-deps">
+        <dependencies>
+            <dep package="glib"/>
+            <dep package="gobject-introspection"/>
+            <dep package="gstreamer"/>
+            <dep package="gst-libav"/>
+            <dep package="gst-plugins-bad"/>
+            <dep package="gst-plugins-base"/>
+            <dep package="gst-plugins-good"/>
+            <dep package="gst-plugins-ugly"/>
+            <dep package="gst-python"/>
+            <dep package="gtk+-3"/>
+            <dep package="pycairo"/>
+            <dep package="pygobject"/>
+            <dep package="dbus"/>
+            <dep package="dbus-glib"/>
+            <dep package="espeak"/>
+            <dep package="sphinxbase"/>
+            <dep package="pocketsphinx"/>
+        </dependencies>
+    </metamodule>
+
+
+
+    <autotools id="sphinxbase" autogen-template="%(srcdir)s/autogen.sh --prefix %(prefix)s &amp;&amp; %(srcdir)s/configure --prefix %(prefix)s">
+        <branch repo="github.com" module="cmusphinx/sphinxbase.git" revision="74370799d5b53afc5b5b94a22f5eff9cb9907b97"/>
+    </autotools>
+
+    <autotools id="pocketsphinx" autogen-template="%(srcdir)s/autogen.sh --prefix %(prefix)s &amp;&amp; %(srcdir)s/configure --prefix %(prefix)s --with-python">
+        <branch repo="github.com" module="cmusphinx/pocketsphinx.git" revision="68ef5dc6d48d791a747026cd43cc6940a9e19f69"/>
+        <dependencies>
+            <dep package="sphinxbase"/>
+        </dependencies>
+    </autotools>
+
+
+    <autotools id="scarlettOS">
+        <branch/>
+        <dependencies>
+            <dep package="glib"/>
+            <dep package="gobject-introspection"/>
+            <dep package="gstreamer"/>
+            <dep package="gst-libav"/>
+            <dep package="gst-plugins-bad"/>
+            <dep package="gst-plugins-base"/>
+            <dep package="gst-plugins-good"/>
+            <dep package="gst-plugins-ugly"/>
+            <dep package="gst-python"/>
+            <dep package="gtk+-3"/>
+            <dep package="pycairo"/>
+            <dep package="pygobject"/>
+            <dep package="dbus"/>
+            <dep package="dbus-glib"/>
+            <dep package="espeak"/>
+            <dep package="sphinxbase"/>
+            <dep package="pocketsphinx"/>
+        </dependencies>
+    </autotools>
+</moduleset>

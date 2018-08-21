@@ -41,7 +41,7 @@
     <repository type="system" name="system"/>
 
 
-    <include href="gnome-sysdeps-3.26.modules"/>
+    <include href="gnome-sysdeps-3.24.modules"/>
 
     <!-- Please try to keep organized alphabetically -->
 

@@ -42,11 +42,14 @@ import os
 prefix='{PREFIX}'
 checkoutroot='{CHECKOUTROOT}'
 modulesets_dir = '{PREFIX}/modulesets'
-moduleset = '{PREFIX}/modulesets/scarlett-world.modules'
-modules = ['{PREFIX}/modulesets/gnome-sysdeps-3.26.modules', '{PREFIX}/modulesets/scarlett-world-deps.modules']
+moduleset = 'scarlett-world'
+# modules = ['gnome-sysdeps-3.26', 'scarlett-world-deps']
+modules = ['gnome-sysdeps-3.24', 'scarlett-world-deps']
 interact = False
 makeargs = '-j4'
 build_policy = 'updated-deps'
+use_local_modulesets = True
+
 os.environ['CFLAGS'] = '{CFLAGS}'
 os.environ['PYTHON'] = 'python'
 os.environ['GSTREAMER'] = '1.0'
