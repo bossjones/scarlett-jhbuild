@@ -1619,11 +1619,9 @@
         </suggests>
     </autotools>
 
-
-    <systemmodule id="py3cairo">
-        <pkg-config>py3cairo.pc</pkg-config>
-        <branch repo="system" version="1.10.0"/>
-    </systemmodule>
+    <distutils id="py3cairo" python3="1">
+        <branch repo="github-tar" version="1.15.1" module="pygobject/pycairo/releases/download/v${version}/pycairo-${version}.tar.gz" checkoutdir="pycairo-python3-${version}" hash="sha256:987d392270247343595d37591f80639ed902fce7e30bd2f944cb1b0a9093553d"/>
+    </distutils>
 
     <!-- Python 3 build of pygobject -->
     <autotools id="pygobject" autogenargs="--with-python=python3">
