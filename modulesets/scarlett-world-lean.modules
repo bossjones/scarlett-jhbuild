@@ -1619,6 +1619,12 @@
         </suggests>
     </autotools>
 
+
+    <systemmodule id="py3cairo">
+        <pkg-config>py3cairo.pc</pkg-config>
+        <branch repo="system" version="1.10.0"/>
+    </systemmodule>
+
     <!-- Python 3 build of pygobject -->
     <autotools id="pygobject" autogenargs="--with-python=python3">
         <branch revision="pygobject-3-24"/>
