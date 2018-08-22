@@ -131,7 +131,7 @@
         </branch>
     </autotools>
 
-    <!-- Stuff that was missing -->
+    <!-- Stuff that was missing   FROM HERE ON 8/21/2018 -->
 
 
     <autotools id="appstream-glib" autogenargs="--disable-stemmer">
@@ -787,6 +787,14 @@
                 <dep package="gudev"/>
             </if>
         </suggests>
+    </autotools>
+
+    <autotools id="gst-plugins-ugly" autogenargs="--disable-fatal-warnings" supports-non-srcdir-builds="no">
+        <branch repo="gstreamer.freedesktop.org" checkoutdir="gst-plugins-ugly" module="gst-plugins-ugly" revision="1.6"/>
+        <dependencies>
+            <dep package="gstreamer"/>
+            <dep package="gst-plugins-base"/>
+        </dependencies>
     </autotools>
 
     <autotools id="gtk+" autogenargs="--enable-broadway-backend --enable-installed-tests">
@@ -1891,6 +1899,15 @@
         <dependencies>
             <dep package="gtk+-3"/>
             <dep package="yelp-tools"/>
+        </dependencies>
+    </autotools>
+
+    <autotools id="gst-python" autogenargs="PYTHON=python3">
+        <branch repo="gstreamer.freedesktop.org"/>
+        <dependencies>
+            <dep package="pygobject"/>
+            <dep package="gstreamer"/>
+            <dep package="gst-plugins-base"/>
         </dependencies>
     </autotools>
 
