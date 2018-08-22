@@ -1907,7 +1907,7 @@
     </autotools>
 
     <autotools id="gst-python" autogenargs="PYTHON=python3">
-        <branch repo="gstreamer.freedesktop.org"/>
+        <branch repo="gstreamer.freedesktop.org" revision="gnome-3-24" />
         <dependencies>
             <dep package="pygobject"/>
             <dep package="gstreamer"/>
