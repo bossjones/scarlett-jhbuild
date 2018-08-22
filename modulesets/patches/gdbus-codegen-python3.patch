@@ -1,0 +1,8 @@
+--- jhbuild/bin/gdbus-codegen	2018-08-22 03:52:10.927696913 +0000
++++ jhbuild/bin/gdbus-codegen.new	2018-08-22 04:28:32.511805838 +0000
+@@ -1,4 +1,4 @@
+-#!python
++#!python3
+
+ # GDBus - GLib D-Bus Library
+ #
