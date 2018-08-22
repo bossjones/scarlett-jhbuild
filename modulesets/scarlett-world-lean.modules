@@ -1906,8 +1906,8 @@
         </dependencies>
     </autotools>
 
-    <autotools id="gst-python" autogenargs="PYTHON=python3">
-        <branch repo="gstreamer.freedesktop.org" revision="1.8.2" />
+    <autotools id="gst-python" autogenargs="PYTHON=python3 --disable-fatal-warnings" supports-non-srcdir-builds="no">
+        <branch repo="gstreamer.freedesktop.org" module="gst-python" checkoutdir="gst-python"/>
         <dependencies>
             <dep package="pygobject"/>
             <dep package="gstreamer"/>
