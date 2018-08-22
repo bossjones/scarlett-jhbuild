@@ -32,7 +32,7 @@ PROJECT_HOME = os.path.join(USERHOME, "dev")
 PY_VERSION = "3.5"
 PY_VERSION_FULL = "{}.2".format(PY_VERSION)
 JHBUILD_GITHUB_URL = "https://github.com/GNOME/jhbuild.git"
-JHBUILD_SHA = "86d958b6778da649b559815c0a0dbe6a5d1a8cd4"
+JHBUILD_SHA = "master"
 PATH_TO_JHBUILD_BIN = os.path.join(USERHOME + ".local/bin", "jhbuild")
 
 JHBUILD_TEMPLATE = """
