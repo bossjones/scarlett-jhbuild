@@ -1915,4 +1915,17 @@
         </dependencies>
     </autotools>
 
+
+
+    <autotools id="at-spi2-atk">
+        <branch revision="gnome-3-24"/>
+        <dependencies>
+            <dep package="dbus"/>
+            <dep package="glib"/>
+            <dep package="atk"/>
+            <dep package="libxml2"/>
+            <dep package="at-spi2-core"/>
+        </dependencies>
+    </autotools>
+
 </moduleset>
