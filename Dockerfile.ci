@@ -22,6 +22,7 @@ ARG HOST_GROUP_ID=1000
 ENV HOST_GROUP_ID ${HOST_GROUP_ID}
 
 RUN apt-get update && apt-get install -y \
+    sudo \
     build-essential \
     ccache \
     curl \
