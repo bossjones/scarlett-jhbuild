@@ -42,9 +42,10 @@ import os
 prefix='{PREFIX}'
 checkoutroot='{CHECKOUTROOT}'
 modulesets_dir = '{PREFIX}/modulesets'
-moduleset = 'scarlett-world'
+moduleset = 'scarlett-world-lean.modules'
 # modules = ['gnome-sysdeps-3.26', 'scarlett-world-deps']
-modules = ['gnome-sysdeps-3.24', 'scarlett-world-deps']
+modules = [ "gobject-introspection", "pygobject", "gst-python" ]
+skip = [ "WebKit" ]
 interact = False
 makeargs = '-j4'
 build_policy = 'updated-deps'
