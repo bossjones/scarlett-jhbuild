@@ -43,3 +43,6 @@ link_modulesets:
 
 render_jhbuildrc:
 	@tools/render_jhbuild.py --cmd render
+
+docker_run:
+	.ci/docker-run.sh
