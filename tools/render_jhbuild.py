@@ -29,8 +29,8 @@ PATH_TO_JHBUILDRC = os.path.join(USERHOME + "/.config", "jhbuildrc")
 PREFIX = os.path.join(USERHOME, "jhbuild")
 CHECKOUTROOT = os.path.join(USERHOME, "gnome")
 PROJECT_HOME = os.path.join(USERHOME, "dev")
-PY_VERSION = "3.5"
-PY_VERSION_FULL = "{}.2".format(PY_VERSION)
+PY_VERSION = "3.6"
+PY_VERSION_FULL = "{}.5".format(PY_VERSION)
 JHBUILD_GITHUB_URL = "https://github.com/GNOME/jhbuild.git"
 JHBUILD_SHA = "master"
 PATH_TO_JHBUILD_BIN = os.path.join(USERHOME + ".local/bin", "jhbuild")
@@ -435,6 +435,8 @@ def setup_all_envs():
 
 
 def write_jhbuildrc():
+    print("MAKING DIR IF IT DOESN'T EXIST: {}".format(os.path.abspath(os.path.join(PATH_TO_JHBUILDRC, os.pardir))))
+    mkdir_p(os.path.abspath(os.path.join(PATH_TO_JHBUILDRC, os.pardir)))
     rendered_jhbuild = render_jhbuildrc_dry_run()
     with open(PATH_TO_JHBUILDRC, "w+") as fp:
         fp.write(rendered_jhbuild)

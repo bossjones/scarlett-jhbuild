@@ -21,8 +21,18 @@ ENV HOST_USER_ID ${HOST_USER_ID}
 ARG HOST_GROUP_ID=1000
 ENV HOST_GROUP_ID ${HOST_GROUP_ID}
 
+# libboost-all-dev
+
 RUN apt-get update && apt-get install -y \
     sudo \
+    bash-completion \
+    apt-file \
+    autoconf \
+    automake \
+    gettext \
+    yelp-tools \
+    flex \
+    bison \
     build-essential \
     ccache \
     curl \
@@ -50,7 +60,14 @@ RUN apt-get update && apt-get install -y \
     libpulse-mainloop-glib0 \
     libpulse0 \
     xvfb \
+    && \
+        apt-get update \
     && rm -rf /var/lib/apt/lists/*
+
+# FIXME: Things we're missing. ran jhbuild sysdeps --install
+# egl file valgrind libXft libhangul nss libseccomp check vala-bootstrap libpwquality cups mtdev libgphoto2 openldap libsndfile kyotocabinet lcms2 doxygen xmlto p11-kit dbus wireless-tools libical pam wavpack libXtst libraw wayland-egl desktop-file-utils dbus-glib plymouth libunwind libusb1 libvirt polkit-agent polkit-gobject espeak libarchive xorg-wacom libcap nettle xcb-dri2 docbook-xml libpsl xwayland startup-notification libdrm docbook-xsl ruby libtasn1 libevdev hyphen docbook-utils libexif libvpx nspr libxkbcommon libyaml libdmapsharing xkbcommon-x11 poppler libgcrypt udisks hunspell libxml2 libndp sane taglib libxslt libunistring libuuid libjpeg dotconf yasm libplist libwebp libnl libXi ppp exiv2 mesa-libGLES libXrandr sassc libXcomposite hogweed libv4l xcb-res libXcursor libproxy mpfr flex intltool libxklavier cargo argyll cyrus-sasl libdb libXdamage fuse libnma anthy fwupdate krb5 iptables libnl-route gbm wget libcanberra-gtk3 caribou libelf avahi smbclient libtiff libXinerama liboauth gexiv2 usbredir libusb1-1.0.9 gl xcb-randr gnutls mpc gpgme libXt libmusicbrainz gperf opus xi graphviz ragel libbluray libudev libcanberra libcdio-paranoia exempi source-highlight libsystemd libxkbfile libimobiledevice libXfixes cmake libmtp flac libnfs dvdread libnl-genl texinfo mozjs60 libepoxy WebKit
+
+# apt-get install libegl1-mesa-dev libxklavier-dev libudisks2-dev libdmapsharing-3.0-dev libplist-dev nettle-dev libgphoto2-dev liblcms2-dev libfuse-dev libsane-dev libxt-dev libical-dev libgbm-dev valgrind libusb-1.0-0-dev libxcb-res0-dev xserver-xorg-input-wacom libstartup-notification0-dev libgexiv2-dev libarchive-dev libgl1-mesa-dev libfwup-dev libgnutls28-dev libpoppler-glib-dev libnma-dev libtag1-dev libusb-1.0-0-dev libndp-dev uuid-dev libgraphviz-dev libbluray-dev libcdio-paranoia-dev libsmbclient-dev libmtp-dev libv4l-dev libnfs-dev libpwquality-dev libxft-dev libsystemd-dev libnss3-dev libseccomp-dev libexiv2-dev check libhunspell-dev libmtdev-dev libanthy-dev libxrandr-dev libxdamage-dev libopus-dev libxi-dev libp11-kit-dev libtasn1-6-dev libwavpack-dev libnl-route-3-dev libcanberra-gtk-dev libxtst-dev libexempi-dev libudev-dev libplymouth-dev libxfixes-dev libunwind-dev libcaribou-dev libpolkit-agent-1-dev libavahi-gobject-dev libpolkit-gobject-1-dev dbus-tests libnl-genl-3-dev libxcb-dri2-0-dev liboauth-dev libpsl-dev libdrm-dev libevdev-dev libnspr4-dev libcanberra-gtk3-dev libexif-dev libvpx-dev libusbredirhost-dev libsndfile1-dev libxkbfile-dev libelf-dev libhangul-dev libxkbcommon-dev libxml2-dev libdotconf-dev libmusicbrainz5-dev libxslt1-dev libraw-dev libdbus-glib-1-dev libegl1-mesa-dev libnl-3-dev libxi-dev libsource-highlight-dev libvirt-dev libxcb-randr0-dev libimobiledevice-dev libgles2-mesa-dev libxkbcommon-x11-dev nettle-dev libxcomposite-dev libflac-dev libxcursor-dev libdvdread-dev libproxy-dev libkyotocabinet-dev libwebkit2gtk-4.0-dev libepoxy-dev flex valac xmlto texinfo xwayland libcups2-dev ruby libgpgme-dev gperf wget cmake sassc argyll intltool desktop-file-utils docbook-utils ragel doxygen yasm cargo libunistring-dev libmpfr-dev libhyphen-dev libkrb5-dev ppp-dev libxinerama-dev libmpc-dev libsasl2-dev libldap2-dev libpam0g-dev libdb5.3-dev libcap-dev libtiff5-dev libmagic-dev libgcrypt20-dev libiw-dev libjpeg-turbo8-dev libyaml-dev libwebp-dev libespeak-dev
 
 RUN set -xe \
     && useradd -U -d /home/${NON_ROOT_USER} -m -r -G adm,tty,audio ${NON_ROOT_USER} \
