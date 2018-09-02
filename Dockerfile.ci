@@ -60,6 +60,7 @@ RUN apt-get update && apt-get install -y \
     libpulse-mainloop-glib0 \
     libpulse0 \
     xvfb \
+    vim \
     && \
         apt-get update \
     && \
