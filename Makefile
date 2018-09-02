@@ -55,3 +55,15 @@ render:
 
 pip-deps:
 	pip install --upgrade pip && pip install pygobject==3.28.3 ptpython black isort ipython pdbpp Pillow matplotlib numpy_ringbuffer MonkeyType autopep8 pylint flake8 pytest
+
+
+create-full-local-hierachy:
+	bash scripts/create-full-local-hierachy.sh
+
+clone-sphinx:
+	python tools/render_jhbuild.py --cmd clone-one --pkg sphinx
+
+mv-sphinx:
+	mv -fv ~/gnome/* ~/src/
+
+dev-env: pip-deps create-full-local-hierachy clone-sphinx mv-sphinx

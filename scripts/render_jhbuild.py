@@ -458,6 +458,11 @@ def clone_all():
         k_full_path = os.path.join(CHECKOUTROOT, k)
         git_clone(v["repo"], k_full_path, sha=v["branch"])
 
+def clone_one(filter):
+    for k, v in repo_git_dicts.items():
+        if filter in k:
+            k_full_path = os.path.join(CHECKOUTROOT, k)
+            git_clone(v["repo"], k_full_path, sha=v["branch"])
 
 def get_tar_files():
     for k, v in repo_tar_dicts.items():
@@ -874,6 +879,9 @@ def main(context):
         untar_files()
     elif context["cmd"] == "build":
         compile_one(context["pkg"])
+    elif context["cmd"] == "clone-one":
+        mkdir_checkoutroot()
+        clone_one(context["pkg"])
     elif context["cmd"] == "compile-all":
         compile_all()
     else:
@@ -884,7 +892,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "cmd",
-        help="cmd to run. Options [bootstrap, dump_env, compile, render-dry-run, render, pip-install-meson, compile-gtk-doc, clone-all, get-all-tar-files, untar-files, build, compile-all]",
+        help="cmd to run. Options [bootstrap, dump_env, compile, render-dry-run, render, pip-install-meson, compile-gtk-doc, clone-all, get-all-tar-files, untar-files, build, compile-all, clone-one]",
     )
     parser.add_argument("--pkg", type=str, required=False, help="Package name.")
 

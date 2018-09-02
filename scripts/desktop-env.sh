@@ -19,6 +19,10 @@ export G_DEBUG='fatal-warnings fatal-criticals'
 export DBUS_DEBUG_OUTPUT=1
 export workdir=/tmp
 
+
+# export LD_LIBRARY_PATH=/usr/local/lib
+# export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+
 pgrep -x dbus-daemon
 if [ "$?" = "0" ]
 then
