@@ -52,3 +52,6 @@ bootstrap: render link_modulesets
 
 render:
 	python tools/render_jhbuild.py --cmd render
+
+pip-deps:
+	pip install --upgrade pip && pip install pygobject==3.28.3 ptpython black isort ipython pdbpp Pillow matplotlib numpy_ringbuffer MonkeyType autopep8 pylint flake8 pytest
