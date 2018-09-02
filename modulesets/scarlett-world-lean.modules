@@ -4,7 +4,7 @@
 <moduleset>
 
     <!-- git repos -->
-    <repository type="git" name="git.gnome.org" default="yes" href="git://git.gnome.org/"/>
+    <repository type="git" name="git://github.com/GNOME" default="yes" href="git://github.com/GNOME/"/>
     <repository type="git" name="git.freedesktop.org" href="git://anongit.freedesktop.org/"/>
     <repository type="git" name="gstreamer.freedesktop.org" href="git://anongit.freedesktop.org/gstreamer/"/>
     <repository type="git" name="telepathy.freedesktop.org" href="git://anongit.freedesktop.org/telepathy/"/>
