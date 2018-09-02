@@ -203,6 +203,16 @@ def clone_jhbuild():
 
     return PREFIX
 
+def clone_all():
+    for k, v in repo_git_dicts.items():
+        k_full_path = os.path.join(CHECKOUTROOT, k)
+        git_clone(v["repo"], k_full_path, sha=v["branch"])
+
+def clone_one(filter):
+    for k, v in repo_git_dicts.items():
+        if filter in k:
+            k_full_path = os.path.join(CHECKOUTROOT, k)
+            git_clone(v["repo"], k_full_path, sha=v["branch"])
 
 def compile_jhbuild():
     Console.message("First check if folder exists")
@@ -521,6 +531,9 @@ def main(context):
         pip_install_meson()
     elif context["cmd"] == "compile-gtk-doc":
         print("compile-gtk-doc")
+    elif context["cmd"] == "clone-one":
+        mkdir_checkoutroot()
+        clone_one(context["pkg"])
     else:
         Console.message("you picked something else weird, please try again")
 
