@@ -9,6 +9,13 @@
 # DBUS_SESSION_BUS_PID=$(echo $(pgrep -x dbus-daemon))
 # DBUS_SESSION_BUS_ADDRESS=
 
+print_dbus_env() {
+    env | grep -i dbus
+}
+
+export LC_MESSAGES='C'
+export G_DEBUG='fatal-warnings fatal-criticals'
+
 export DBUS_DEBUG_OUTPUT=1
 export workdir=/tmp
 
@@ -19,6 +26,7 @@ then
     export DBUS_SESSION_BUS_ADDRESS="$(cat "$workdir"/sessionbus.address)"
     test -n "$DBUS_SESSION_BUS_ADDRESS"
     export DBUS_SESSION_BUS_PID="$(cat "$workdir"/sessionbus.pid)"
+    print_dbus_env
     exit 0
 else
 
@@ -30,6 +38,7 @@ else
     export DBUS_SESSION_BUS_ADDRESS="$(cat "$workdir"/sessionbus.address)"
     test -n "$DBUS_SESSION_BUS_ADDRESS"
     export DBUS_SESSION_BUS_PID="$(cat "$workdir"/sessionbus.pid)"
+    print_dbus_env
 
 fi
 
