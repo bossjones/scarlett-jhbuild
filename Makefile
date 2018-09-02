@@ -46,3 +46,9 @@ render_jhbuildrc:
 
 docker_run:
 	.ci/docker-run.sh
+
+bootstrap:
+	python tools/render_jhbuild.py --cmd bootstrap
+
+render:
+	python tools/render_jhbuild.py --cmd render

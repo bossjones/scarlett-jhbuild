@@ -4,7 +4,8 @@ LABEL Maintainer "Malcolm Jones <bossjones@theblacktonystark.com>"
 
 ENV NON_ROOT_USER=developer \
     container=docker \
-    TERM=xterm-256color
+    TERM=xterm-256color \
+    PYTHONDONTWRITEBYTECODE=true
 
 # SOURCE: https://github.com/ishiland/docker-python-geosupport/blob/9a670fe15ffca194226ce77da13b54014dbe42c3/Dockerfile
 # Unable to set GEOFILES and LD_LIBRARY_PATH based on defined geosupport_version. Need additional logic to
@@ -106,7 +107,6 @@ RUN set -xe \
     && cat /etc/sudoers \
     && echo "${NON_ROOT_USER}:${NON_ROOT_USER}" | chpasswd && \
     mkdir /var/run/dbus && \
-    mkdir -p /home/${NON_ROOT_USER}/.local/bin && \
     chown ${NON_ROOT_USER}:${NON_ROOT_USER} -Rv /home/${NON_ROOT_USER}
 
 # ---------------------------------
@@ -166,9 +166,9 @@ RUN curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/p
     find ${PYENV_ROOT} -name "*.tmp" -exec rm {} \; && \
     find ${PYENV_ROOT} -type d -name ".git" -prune -exec rm -rf {} \;
 
-RUN PYTHONDONTWRITEBYTECODE=true pyenv install 2.7.14
-RUN PYTHONDONTWRITEBYTECODE=true pyenv install 3.6.5
-RUN PYTHONDONTWRITEBYTECODE=true pyenv install --debug 3.7.0
+RUN pyenv install 2.7.14
+RUN pyenv install 3.6.5
+RUN pyenv install --debug 3.7.0
 
 # Cloning into '/home/developer/.pyenv'...
 # Cloning into '/home/developer/.pyenv/plugins/pyenv-doctor'...
@@ -178,5 +178,4 @@ RUN PYTHONDONTWRITEBYTECODE=true pyenv install --debug 3.7.0
 # Cloning into '/home/developer/.pyenv/plugins/pyenv-which-ext'...
 # Cloning into '/home/developer/.pyenv/plugins/pyenv-default-packages'...
 
-ENV PATH="/home/${NON_ROOT_USER}/.local/bin:${PATH}"
 ENV PATH="/usr/lib/ccache:${PATH}"
