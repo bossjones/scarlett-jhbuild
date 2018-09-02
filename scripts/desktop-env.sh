@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-export LANG=en_US.UTF8
-
 # SOURCE: https://dbus.freedesktop.org/doc/dbus-uuidgen.1.html
 # SOURCE: https://github.com/linzhangru/dbus/blob/95af34cdb84b8f8eb402a9dd55fab99853e23c3f/test/test-dbus-daemon-fork.sh
 
