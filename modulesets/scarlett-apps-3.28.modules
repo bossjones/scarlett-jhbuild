@@ -14,6 +14,8 @@
     <repository type="tarball" name="freedesktop.org" href="https://freedesktop.org/"/>
     <repository type="tarball" name="gnome.org" href="https://download.gnome.org/sources/"/>
     <repository type="tarball" name="kernel.org" href="https://www.kernel.org"/>
+    <repository type="tarball" name="python" href="http://www.python.org/ftp/python/"/>
+
 
     <include href="gnome-suites-core-deps-3.28.modules"/>
 
