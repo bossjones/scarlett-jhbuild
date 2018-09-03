@@ -452,6 +452,14 @@
         </dependencies>
     </autotools>
 
+    <autotools id="gst-plugins-ugly" autogenargs="--disable-fatal-warnings" supports-non-srcdir-builds="no">
+        <branch repo="gstreamer.freedesktop.org" checkoutdir="gst-plugins-ugly" module="gst-plugins-ugly" revision="1.6"/>
+        <dependencies>
+            <dep package="gstreamer"/>
+            <dep package="gst-plugins-base"/>
+        </dependencies>
+    </autotools>
+
     <meson id="gvfs" mesonargs="-Dsystemduserunitdir=no -Dtmpfilesdir=no -Dinstalled_tests=true">
         <if condition-unset="linux">
             <mesonargs value="-Dadmin=false -Dudisks2=false"/>
