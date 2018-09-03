@@ -47,7 +47,9 @@ render_jhbuildrc:
 docker_run:
 	.ci/docker-run.sh
 
-bootstrap: compile_jhbuild render link_modulesets jhbuild_list
+bootstrap: jhbuild_bootstrap render link_modulesets jhbuild_list
+
+jhbuild_bootstrap:
 	python scripts/render_jhbuild.py --cmd bootstrap
 
 compile_jhbuild:
