@@ -22,7 +22,9 @@ ENV HOST_GROUP_ID ${HOST_GROUP_ID}
 
 # libboost-all-dev
 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
+RUN sed -i "s,# deb-src http://archive.ubuntu.com/ubuntu/ bionic main restricted, deb-src http://archive.ubuntu.com/ubuntu/ bionic main restricted,g" /etc/apt/sources.list && \
+    sed -i "s,# deb-src http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted,deb-src http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted,g" /etc/apt/sources.list && \
+    DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y \
     sudo \
     bash-completion \
     apt-file \
