@@ -9,12 +9,44 @@
     <repository type="git" name="gitlab.gnome.org" href="https://gitlab.gnome.org/"/>
     <repository type="git" name="git.freedesktop.org" href="https://anongit.freedesktop.org/git/"/>
     <repository type="git" name="github.com" href="https://github.com/"/>
+    <repository type="git" name="git://github.com/GNOME" default="yes" href="git://github.com/GNOME/"/>
+    <repository type="git" name="git.freedesktop.org" href="git://anongit.freedesktop.org/"/>
+    <repository type="git" name="gstreamer.freedesktop.org" href="git://anongit.freedesktop.org/gstreamer/"/>
+    <repository type="git" name="telepathy.freedesktop.org" href="git://anongit.freedesktop.org/telepathy/"/>
+    <repository type="git" name="wayland.freedesktop.org" href="git://anongit.freedesktop.org/git/wayland"/>
+    <repository type="git" name="xorg.freedesktop.org" href="git://anongit.freedesktop.org/git/xorg"/>
+    <repository type="git" name="github.com" href="git://github.com/"/>
+    <repository type="git" name="linuxwacom.git.sourceforge.net" href="git://linuxwacom.git.sourceforge.net/"/>
+    <repository type="git" name="quvi" href="git://repo.or.cz/"/>
+    <repository type="git" name="gitlab.com" href="https://gitlab.com/"/>
+    <repository type="git" name="git.libvirt.org" href="git://libvirt.org/"/>
+
 
     <!-- tarball repos -->
     <repository type="tarball" name="freedesktop.org" href="https://freedesktop.org/"/>
     <repository type="tarball" name="gnome.org" href="https://download.gnome.org/sources/"/>
     <repository type="tarball" name="kernel.org" href="https://www.kernel.org"/>
     <repository type="tarball" name="python" href="http://www.python.org/ftp/python/"/>
+    <repository type="tarball" name="cairo.org" href="http://cairographics.org/"/>
+    <repository type="tarball" name="iso-codes" href="https://ftp.osuosl.org/pub/blfs/conglomeration/iso-codes/"/>
+    <repository type="tarball" name="sourceforge.net" href="http://sourceforge.net/projects/"/>
+    <repository type="tarball" name="webkitgtk.org" href="http://webkitgtk.org/releases/"/>
+    <repository type="tarball" name="freedesktop.org" href="http://freedesktop.org/software/"/>
+    <repository type="tarball" name="people.freedesktop.org" href="http://people.freedesktop.org/"/>
+    <repository type="tarball" name="icon-theme.freedesktop.org" href="http://icon-theme.freedesktop.org/releases/"/>
+    <repository type="tarball" name="nice.freedesktop.org" href="http://nice.freedesktop.org/releases/"/>
+    <repository type="tarball" name="ftp.mozilla.org" href="http://ftp.mozilla.org/"/>
+    <repository type="tarball" name="kernel.org" href="http://www.kernel.org"/>
+    <repository type="tarball" name="ftp.gnu.org" href="http://ftp.gnu.org/gnu/"/>
+    <repository type="tarball" name="mir" href="https://launchpad.net/mir/"/>
+    <repository type="tarball" name="xorg-tar" href="http://xorg.freedesktop.org/"/>
+    <repository type="tarball" name="github-tar" href="https://github.com/"/>
+    <repository type="tarball" name="libxkbcommon" href="http://xkbcommon.org/download/"/>
+    <repository type="tarball" name="tarball.github.com" href="https://github.com/"/>
+    <repository type="tarball" name="pcre" href="ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/"/>
+    <repository type="tarball" name="speech-dispatcher" href="http://devel.freebsoft.org/pub/projects/speechd/"/>
+    <repository type="tarball" name="spice" href="http://www.spice-space.org/download/"/>
+    <repository type="tarball" name="people.mozilla.org" href="https://people.mozilla.org/~sstangl/"/>
 
 
     <include href="gnome-suites-core-deps-3.28.modules"/>
