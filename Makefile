@@ -47,15 +47,20 @@ render_jhbuildrc:
 docker_run:
 	.ci/docker-run.sh
 
-bootstrap: render link_modulesets
+bootstrap: compile_jhbuild render link_modulesets jhbuild_list
 	python scripts/render_jhbuild.py --cmd bootstrap
+
+compile_jhbuild:
+	python scripts/render_jhbuild.py --cmd compile
 
 render:
 	python scripts/render_jhbuild.py --cmd render
 
+jhbuild_list:
+	jhbuild list
+
 pip-deps:
 	pip install --upgrade pip && pip install pygobject==3.28.3 ptpython black isort ipython pdbpp Pillow matplotlib numpy_ringbuffer MonkeyType autopep8 pylint flake8 pytest
-
 
 create-full-local-hierachy:
 	bash scripts/create-full-local-hierachy.sh
