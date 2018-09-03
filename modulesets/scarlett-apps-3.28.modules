@@ -8,7 +8,6 @@
     <repository type="git" name="git.gnome.org" default="yes" href="https://git.gnome.org/browse/"/>
     <repository type="git" name="gitlab.gnome.org" href="https://gitlab.gnome.org/"/>
     <repository type="git" name="git.freedesktop.org" href="https://anongit.freedesktop.org/git/"/>
-    <repository type="git" name="github.com" href="https://github.com/"/>
     <repository type="git" name="git://github.com/GNOME" default="yes" href="git://github.com/GNOME/"/>
     <repository type="git" name="git.freedesktop.org" href="git://anongit.freedesktop.org/"/>
     <repository type="git" name="gstreamer.freedesktop.org" href="git://anongit.freedesktop.org/gstreamer/"/>
@@ -31,7 +30,7 @@
     <repository type="tarball" name="iso-codes" href="https://ftp.osuosl.org/pub/blfs/conglomeration/iso-codes/"/>
     <repository type="tarball" name="sourceforge.net" href="http://sourceforge.net/projects/"/>
     <repository type="tarball" name="webkitgtk.org" href="http://webkitgtk.org/releases/"/>
-    <repository type="tarball" name="freedesktop.org" href="http://freedesktop.org/software/"/>
+    <!-- <repository type="tarball" name="freedesktop.org" href="http://freedesktop.org/software/"/> -->
     <repository type="tarball" name="people.freedesktop.org" href="http://people.freedesktop.org/"/>
     <repository type="tarball" name="icon-theme.freedesktop.org" href="http://icon-theme.freedesktop.org/releases/"/>
     <repository type="tarball" name="nice.freedesktop.org" href="http://nice.freedesktop.org/releases/"/>
@@ -481,6 +480,15 @@
             <dep package="glib"/>
             <dep package="gnome-common"/>
             <dep package="gobject-introspection"/>
+        </dependencies>
+    </autotools>
+
+    <autotools id="gst-python" autogenargs="PYTHON=python3">
+        <branch repo="gstreamer.freedesktop.org"/>
+        <dependencies>
+            <dep package="pygobject"/>
+            <dep package="gstreamer"/>
+            <dep package="gst-plugins-base"/>
         </dependencies>
     </autotools>
 
