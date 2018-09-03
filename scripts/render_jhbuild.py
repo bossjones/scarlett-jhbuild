@@ -322,11 +322,11 @@ import os
 prefix='{PREFIX}'
 checkoutroot='{CHECKOUTROOT}'
 modulesets_dir = '{PREFIX}/modulesets'
-moduleset = 'scarlett-world-lean.modules'
-# moduleset = 'scarlett-apps-3.28.modules'
-# modules = [ 'python-365', 'glib', 'gobject-introspection', 'gstreamer', 'gst-libav', 'gst-plugins-bad', 'gst-plugins-base', 'gst-plugins-good', 'gst-plugins-ugly', 'gst-python', 'gtk+-3', 'pycairo', 'pygobject' ]
+# moduleset = 'scarlett-world-lean.modules'
+moduleset = 'scarlett-apps-3.28.modules'
+modules = [ 'python-365', 'glib', 'gobject-introspection', 'gstreamer', 'gst-libav', 'gst-plugins-bad', 'gst-plugins-base', 'gst-plugins-good', 'gst-plugins-ugly', 'gst-python', 'gtk+-3', 'pycairo', 'pygobject' ]
 # modules = ['gnome-sysdeps-3.26', 'scarlett-world-deps']
-modules = [ "gobject-introspection", "pygobject", "gst-python" ]
+# modules = [ "gobject-introspection", "pygobject", "gst-python" ]
 skip = [ "WebKit" ]
 interact = False
 makeargs = '-j4'
