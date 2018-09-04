@@ -46,7 +46,7 @@
     <repository type="tarball" name="speech-dispatcher" href="http://devel.freebsoft.org/pub/projects/speechd/"/>
     <repository type="tarball" name="spice" href="http://www.spice-space.org/download/"/>
     <repository type="tarball" name="people.mozilla.org" href="https://people.mozilla.org/~sstangl/"/>
-
+    <repository type="system" name="system"/>
 
     <include href="gnome-suites-core-deps-3.28.modules"/>
 
@@ -60,6 +60,15 @@
 
      All modules in this file should be in a metamodule.
   -->
+
+
+    <distutils id="meson" python3="1">
+        <branch repo="github-tar" version="0.47.0" module="mesonbuild/meson/releases/download/${version}/meson-${version}.tar.gz" checkoutdir="meson-${version}" />
+        <dependencies>
+            <dep package="ninja"/>
+        </dependencies>
+    </distutils>
+
 
     <!-- This is the only version that supports a disable-docs option -->
     <!-- SOURCE: https://github.com/fribidi/fribidi/pull/73 -->
@@ -121,6 +130,16 @@
                 <dep package="xi"/>
                 <dep package="xkbcommon-x11"/>
             </if>
+        </dependencies>
+    </meson>
+
+    <meson id="atk">
+        <branch revision="ATK_2_29_2"/>
+        <mesonargs value="-Ddocs=false"/>
+        <dependencies>
+            <dep package="glib"/>
+            <dep package="gobject-introspection"/>
+            <dep package="gtk-doc"/>
         </dependencies>
     </meson>
 
@@ -500,8 +519,70 @@
         </dependencies>
     </autotools>
 
+    <systemmodule id="gudev">
+        <pkg-config>gudev-1.0.pc</pkg-config>
+        <branch repo="system" version="173"/>
+    </systemmodule>
+
+    <autotools id="gstreamer" autogenargs="--disable-tests --disable-fatal-warnings" supports-non-srcdir-builds="no">
+        <branch repo="gstreamer.freedesktop.org" module="gstreamer" revision="1.14.1" checkoutdir="gstreamer"/>
+        <dependencies>
+            <dep package="glib"/>
+            <dep package="libxml2"/>
+            <dep package="gobject-introspection"/>
+        </dependencies>
+    </autotools>
+
+
+    <autotools id="gst-plugins-bad" autogenargs="--disable-fatal-warnings" supports-non-srcdir-builds="no">
+        <branch repo="gstreamer.freedesktop.org" checkoutdir="gst-plugins-bad" revision="1.14.1" module="gst-plugins-bad"/>
+        <dependencies>
+            <dep package="gstreamer"/>
+            <dep package="gst-plugins-base"/>
+        </dependencies>
+        <suggests>
+            <dep package="graphene"/>
+        </suggests>
+    </autotools>
+
+    <autotools id="gst-plugins-base" autogenargs="--disable-fatal-warnings" supports-non-srcdir-builds="no">
+        <branch repo="gstreamer.freedesktop.org" module="gst-plugins-base"  revision="1.14.1" checkoutdir="gst-plugins-base"/>
+        <dependencies>
+            <dep package="gstreamer"/>
+            <dep package="gtk+-3"/>
+            <dep package="iso-codes"/>
+        </dependencies>
+        <suggests>
+            <if condition-set="linux">
+                <dep package="gudev"/>
+            </if>
+        </suggests>
+    </autotools>
+
+    <autotools id="gst-plugins-good" autogenargs="--disable-fatal-warnings" supports-non-srcdir-builds="no">
+        <branch repo="gstreamer.freedesktop.org" module="gst-plugins-good"  revision="1.14.1" checkoutdir="gst-plugins-good"/>
+        <dependencies>
+            <dep package="gstreamer"/>
+            <dep package="gst-plugins-base"/>
+            <dep package="flac"/>
+            <dep package="libvpx"/>
+            <dep package="taglib"/>
+            <dep package="wavpack"/>
+            <if condition-unset="macos">
+                <dep package="libv4l"/>
+            </if>
+        </dependencies>
+        <suggests>
+            <dep package="pulseaudio"/>
+            <dep package="gdk-pixbuf"/>
+            <if condition-set="linux">
+                <dep package="gudev"/>
+            </if>
+        </suggests>
+    </autotools>
+
     <autotools id="gst-python" autogenargs="PYTHON=python3">
-        <branch repo="gstreamer.freedesktop.org"/>
+        <branch repo="gstreamer.freedesktop.org" revision="1.14.1"/>
         <dependencies>
             <dep package="python-365"/>
             <dep package="pygobject"/>
@@ -511,7 +592,7 @@
     </autotools>
 
     <autotools id="gst-plugins-ugly" autogenargs="--disable-fatal-warnings" supports-non-srcdir-builds="no">
-        <branch repo="gstreamer.freedesktop.org" checkoutdir="gst-plugins-ugly" module="gst-plugins-ugly" revision="1.6"/>
+        <branch repo="gstreamer.freedesktop.org" checkoutdir="gst-plugins-ugly" module="gst-plugins-ugly" revision="1.14.1"/>
         <dependencies>
             <dep package="gstreamer"/>
             <dep package="gst-plugins-base"/>
