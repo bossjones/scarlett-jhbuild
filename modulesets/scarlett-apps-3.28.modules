@@ -86,7 +86,7 @@
     <distutils id="pycairo" python3="1">
         <branch repo="github.com" module="pygobject/pycairo.git" checkoutdir="pycairo-python3"/>
         <dependencies>
-            <dep package="python-356"/>
+            <dep package="python-365"/>
         </dependencies>
     </distutils>
 
@@ -95,7 +95,7 @@
         <dependencies>
             <dep package="glib"/>
             <dep package="pycairo"/>
-            <dep package="python3-356"/>
+            <dep package="python-365"/>
             <dep package="gobject-introspection"/>
         </dependencies>
     </distutils>
