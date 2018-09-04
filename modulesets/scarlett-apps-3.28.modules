@@ -84,14 +84,14 @@
     </autotools>
 
     <distutils id="pycairo" python3="1">
-        <branch repo="github.com" module="pygobject/pycairo.git" checkoutdir="pycairo-python3"/>
+        <branch repo="github.com" module="pygobject/pycairo.git" checkoutdir="pycairo-python3" revision="v1.17.1"/>
         <dependencies>
             <dep package="python-365"/>
         </dependencies>
     </distutils>
 
     <distutils id="pygobject" python3="1">
-        <branch repo="gitlab.gnome.org" module="GNOME/pygobject.git" revision="v1.17.1"/>
+        <branch repo="gitlab.gnome.org" module="GNOME/pygobject.git" revision="3.28.3"/>
         <dependencies>
             <dep package="glib"/>
             <dep package="pycairo"/>
