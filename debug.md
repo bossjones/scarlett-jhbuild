@@ -16,3 +16,11 @@ W: meta-scarlett-world-deps has a dependency on unknown "gst-plugins-ugly" modul
 W: meta-scarlett-world-deps has a dependency on unknown "gst-python" module
 W: meta-scarlett-world-deps has a dependency on unknown "pycairo" module
 ```
+
+
+```
+*** Error during phase configure of pycairo: ########## Error running /home/developer/gnome/pycairo-1.8.2/configure --prefix /home/developer/jhbuild --disable-Werror  --disable-static --disable-gtk-doc  *** [32/32]
+*** the following modules were not built *** [32/32]
+gstreamer fribidi pango at-spi2-atk gtk+-3 libgudev gst-plugins-base gst-libav graphene gst-plugins-bad gst-plugins-good gst-plugins-ugly gst-python pycairo
+developer@774c17ee4734:~/app$
+```

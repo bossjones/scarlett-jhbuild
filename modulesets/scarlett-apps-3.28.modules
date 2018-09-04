@@ -9,7 +9,7 @@
     <repository type="git" name="gitlab.gnome.org" href="https://gitlab.gnome.org/"/>
     <repository type="git" name="git.freedesktop.org" href="https://anongit.freedesktop.org/git/"/>
     <repository type="git" name="git://github.com/GNOME" default="yes" href="git://github.com/GNOME/"/>
-    <repository type="git" name="git.freedesktop.org" href="git://anongit.freedesktop.org/"/>
+    <!-- <repository type="git" name="git.freedesktop.org" href="git://anongit.freedesktop.org/"/> -->
     <repository type="git" name="gstreamer.freedesktop.org" href="git://anongit.freedesktop.org/gstreamer/"/>
     <repository type="git" name="telepathy.freedesktop.org" href="git://anongit.freedesktop.org/telepathy/"/>
     <repository type="git" name="wayland.freedesktop.org" href="git://anongit.freedesktop.org/git/wayland"/>
@@ -35,7 +35,7 @@
     <repository type="tarball" name="icon-theme.freedesktop.org" href="http://icon-theme.freedesktop.org/releases/"/>
     <repository type="tarball" name="nice.freedesktop.org" href="http://nice.freedesktop.org/releases/"/>
     <repository type="tarball" name="ftp.mozilla.org" href="http://ftp.mozilla.org/"/>
-    <repository type="tarball" name="kernel.org" href="http://www.kernel.org"/>
+    <!-- <repository type="tarball" name="kernel.org" href="http://www.kernel.org"/> -->
     <repository type="tarball" name="ftp.gnu.org" href="http://ftp.gnu.org/gnu/"/>
     <repository type="tarball" name="mir" href="https://launchpad.net/mir/"/>
     <repository type="tarball" name="xorg-tar" href="http://xorg.freedesktop.org/"/>
@@ -60,6 +60,15 @@
 
      All modules in this file should be in a metamodule.
   -->
+
+    <!-- This is the only version that supports a disable-docs option -->
+    <!-- SOURCE: https://github.com/fribidi/fribidi/pull/73 -->
+    <autotools id="fribidi" autogen-sh="autoreconf" supports-non-srcdir-builds="no" autogenargs="--disable-docs" makeargs="-j1">
+        <branch repo="github.com" checkoutdir="fribidi" module="fribidi/fribidi" revision="f2c9d50722cb60d0cdec3b1bafba9029770e86b4"/>
+        <dependencies>
+            <dep package="glib"/>
+        </dependencies>
+    </autotools>
 
     <autotools id="python-365" autogenargs="--enable-shared --with-pydebug --enable-loadable-sqlite-extensions" autogen-sh="configure">
         <branch repo="python" module="${version}/Python-${version}.tar.xz" version="3.6.5" hash="sha256:f434053ba1b5c8a5cc597e966ead3c5143012af827fd3f0697d21450bb8d87a6"/>
@@ -494,6 +503,7 @@
     <autotools id="gst-python" autogenargs="PYTHON=python3">
         <branch repo="gstreamer.freedesktop.org"/>
         <dependencies>
+            <dep package="python-365"/>
             <dep package="pygobject"/>
             <dep package="gstreamer"/>
             <dep package="gst-plugins-base"/>
