@@ -83,13 +83,22 @@
         <branch repo="python" module="${version}/Python-${version}.tar.xz" version="3.6.5" hash="sha256:f434053ba1b5c8a5cc597e966ead3c5143012af827fd3f0697d21450bb8d87a6"/>
     </autotools>
 
-    <autotools id="pycairo">
-        <branch module="releases/pycairo-1.8.2.tar.gz" version="1.8.2" repo="cairo.org" hash="sha256:77a8cbe388fd66825056744f2fc5c58b3afc247748bc2c777751cc0c2eb30a2f" md5sum="bbfc0c2fef08dfb0c5b8baa5f0b67a87" size="519064">
-        </branch>
+    <distutils id="pycairo" python3="1">
+        <branch repo="github.com" module="pygobject/pycairo.git" checkoutdir="pycairo-python3"/>
         <dependencies>
-            <dep package="cairo"/>
+            <dep package="python-356"/>
         </dependencies>
-    </autotools>
+    </distutils>
+
+    <distutils id="pygobject" python3="1">
+        <branch repo="gitlab.gnome.org" module="GNOME/pygobject.git" revision="v1.17.1"/>
+        <dependencies>
+            <dep package="glib"/>
+            <dep package="pycairo"/>
+            <dep package="python3-356"/>
+            <dep package="gobject-introspection"/>
+        </dependencies>
+    </distutils>
 
 
     <!-- Core User Shell -->
