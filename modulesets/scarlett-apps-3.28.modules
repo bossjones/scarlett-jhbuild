@@ -1701,4 +1701,44 @@
         </dependencies>
     </metamodule>
 
+    <autotools id="gst-editing-services">
+        <branch repo="gstreamer.freedesktop.org" module="gst-editing-services" revision="1.14.1"/>
+        <dependencies>
+            <dep package="glib"/>
+            <dep package="gstreamer"/>
+            <dep package="gst-plugins-base"/>
+            <dep package="gst-plugins-bad"/>
+        </dependencies>
+    </autotools>
+
+
+    <autotools id="gst-libav">
+        <branch repo="git.freedesktop.org" checkoutdir="gst-libav" module="gstreamer/gst-libav" revision="1.14.1"/>
+        <dependencies>
+            <dep package="gst-plugins-base"/>
+        </dependencies>
+        <suggests>
+            <dep package="yasm"/>
+        </suggests>
+    </autotools>
+
+    <metamodule id="meta-scarlett-bootstrap">
+        <dependencies>
+            <dep package="python-365"/>
+            <dep package="glib"/>
+            <dep package="gobject-introspection"/>
+            <dep package="gstreamer"/>
+            <dep package="gst-editing-services"/>
+            <dep package="gst-libav"/>
+            <dep package="gst-plugins-bad"/>
+            <dep package="gst-plugins-base"/>
+            <dep package="gst-plugins-good"/>
+            <dep package="gst-plugins-ugly"/>
+            <dep package="gst-python"/>
+            <dep package="gtk+-3"/>
+            <dep package="pycairo"/>
+            <dep package="pygobject"/>
+        </dependencies>
+    </metamodule>
+
 </moduleset>

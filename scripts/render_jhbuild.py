@@ -328,14 +328,18 @@ modules = [ 'python-365', 'glib', 'fribidi', 'gobject-introspection', 'gstreamer
 # modules = ['gnome-sysdeps-3.26', 'scarlett-world-deps']
 # modules = [ "gobject-introspection", "pygobject", "gst-python" ]
 module_mesonargs['gstreamer'] = '-Ddisable_gtkdoc=true -Dgtk_doc=false'
-autogenargs='--disable-gtk-doc PYTHON=python3'
+# FIXME: Worth trying this below to ensure everything is against python3
+# autogenargs='--disable-gtk-doc PYTHON=python3'
+autogenargs='--disable-gtk-doc'
 skip = [ "WebKit" ]
 interact = False
 makeargs = '-j4'
 build_policy = 'updated-deps'
 use_local_modulesets = True
 os.environ['CFLAGS'] = '{CFLAGS}'
-os.environ['PYTHON'] = 'python'
+# FIXME: Temp python -> python3
+# os.environ['PYTHON'] = 'python'
+os.environ['PYTHON'] = 'python3'
 os.environ['GSTREAMER'] = '1.0'
 os.environ['ENABLE_PYTHON3'] = 'yes'
 os.environ['ENABLE_GTK'] = 'yes'
@@ -343,10 +347,18 @@ os.environ['PYTHON_VERSION'] = '{PYTHON_VERSION}'
 os.environ['MAKEFLAGS'] = '-j4'
 os.environ['PREFIX'] = '{PREFIX}'
 os.environ['JHBUILD'] = '{CHECKOUTROOT}'
-os.environ['PATH'] = '{PATH}'
-os.environ['LD_LIBRARY_PATH'] = '{LD_LIBRARY_PATH}'
-os.environ['PYTHONPATH'] = '{PYTHONPATH}'
-os.environ['PKG_CONFIG_PATH'] = '{PKG_CONFIG_PATH}'
+# -------------------------------------------------
+# NOTE: TEMPORARY COMMENT THIS OUT, new paths including path to jhbuild/bin dir
+# -------------------------------------------------
+# os.environ['PATH'] = '{PATH}'
+# os.environ['LD_LIBRARY_PATH'] = '{LD_LIBRARY_PATH}'
+# os.environ['PYTHONPATH'] = '{PYTHONPATH}'
+# os.environ['PKG_CONFIG_PATH'] = '{PKG_CONFIG_PATH}'
+os.environ['PATH'] = '/usr/lib/ccache:/home/developer/jhbuild/bin:/home/developer/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+os.environ['LD_LIBRARY_PATH'] = '/home/developer/jhbuild/lib:/usr/lib'
+os.environ['PYTHONPATH'] = '/home/developer/jhbuild/lib/python3.6/site-packages'
+os.environ['PKG_CONFIG_PATH'] = '/home/developer/jhbuild/lib/pkgconfig:/home/developer/jhbuild/share/pkgconfig:/usr/lib/pkgconfig'
+# -------------------------------------------------
 os.environ['XDG_DATA_DIRS'] = '{XDG_DATA_DIRS}'
 os.environ['XDG_CONFIG_DIRS'] = '{XDG_CONFIG_DIRS}'
 os.environ['CC'] = 'gcc'
