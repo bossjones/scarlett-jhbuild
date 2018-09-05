@@ -328,7 +328,7 @@ modules = [ 'python-365', 'glib', 'fribidi', 'gobject-introspection', 'gstreamer
 # modules = ['gnome-sysdeps-3.26', 'scarlett-world-deps']
 # modules = [ "gobject-introspection", "pygobject", "gst-python" ]
 module_mesonargs['gstreamer'] = '-Ddisable_gtkdoc=true -Dgtk_doc=false'
-autogenargs='--disable-gtk-doc'
+autogenargs='--disable-gtk-doc PYTHON=python3'
 skip = [ "WebKit" ]
 interact = False
 makeargs = '-j4'

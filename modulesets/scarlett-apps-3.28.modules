@@ -62,6 +62,29 @@
   -->
 
 
+    <autotools id="cairo" autogenargs="--enable-gl">
+        <if condition-set="quartz">
+            <autogenargs value="--enable-quartz --disable-gl"/>
+        </if>
+        <branch repo="git.freedesktop.org" module="cairo" revision="1.15.12"/>
+        <dependencies>
+            <if condition-unset="quartz">
+                <dep package="fontconfig"/>
+                <dep package="freetype2"/>
+                <dep package="gl"/>
+            </if>
+            <if condition-set="x11">
+                <dep package="libXext"/>
+                <dep package="libXrender"/>
+                <dep package="x11"/>
+            </if>
+            <dep package="pixman"/>
+            <dep package="libpng"/>
+            <dep package="zlib"/>
+        </dependencies>
+    </autotools>
+
+
     <distutils id="meson" python3="1">
         <branch repo="github-tar" version="0.47.0" module="mesonbuild/meson/releases/download/${version}/meson-${version}.tar.gz" checkoutdir="meson-${version}" />
         <dependencies>
@@ -79,12 +102,12 @@
         </dependencies>
     </autotools>
 
-    <autotools id="python-365" autogenargs="--enable-shared --with-pydebug --enable-loadable-sqlite-extensions" autogen-sh="configure">
+    <autotools id="python-365" autogenargs="--enable-shared --with-pydebug --enable-loadable-sqlite-extensions --with-ensurepip=upgrade" autogen-sh="configure">
         <branch repo="python" module="${version}/Python-${version}.tar.xz" version="3.6.5" hash="sha256:f434053ba1b5c8a5cc597e966ead3c5143012af827fd3f0697d21450bb8d87a6"/>
     </autotools>
 
     <distutils id="pycairo" python3="1">
-        <branch repo="github.com" module="pygobject/pycairo.git" checkoutdir="pycairo-python3" revision="v1.17.1"/>
+        <branch repo="github.com" module="pygobject/pycairo.git" checkoutdir="pycairo-python3" revision="v1.16.3"/>
         <dependencies>
             <dep package="python-365"/>
         </dependencies>
