@@ -96,7 +96,7 @@
     <!-- This is the only version that supports a disable-docs option -->
     <!-- SOURCE: https://github.com/fribidi/fribidi/pull/73 -->
     <autotools id="fribidi" autogen-sh="autoreconf" supports-non-srcdir-builds="no" autogenargs="--disable-docs" makeargs="-j1">
-        <branch repo="github.com" checkoutdir="fribidi" module="fribidi/fribidi" revision="f2c9d50722cb60d0cdec3b1bafba9029770e86b4"/>
+        <branch repo="github.com" checkoutdir="fribidi" module="fribidi/fribidi" revision="v1.0.2"/>
         <dependencies>
             <dep package="glib"/>
         </dependencies>
