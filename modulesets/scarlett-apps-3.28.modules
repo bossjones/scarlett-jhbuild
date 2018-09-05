@@ -1734,7 +1734,7 @@
             <dep package="gst-plugins-base"/>
             <dep package="gst-plugins-good"/>
             <dep package="gst-plugins-ugly"/>
-            <dep package="gst-python"/>
+            <!-- <dep package="gst-python"/> -->
             <dep package="gtk+-3"/>
             <dep package="pycairo"/>
             <dep package="pygobject"/>
