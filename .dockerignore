@@ -50,3 +50,6 @@ cov.xml
 gir-1.0
 gir-1.0/*
 .pytest_cache
+
+.vagrant/
+*.retry

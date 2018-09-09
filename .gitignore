@@ -120,3 +120,8 @@ hacking/devel/
 /build*
 /install*
 /jhbuild.git
+
+
+.vagrant/
+*.retry
+roles/*

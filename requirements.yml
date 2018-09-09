@@ -1,0 +1,14 @@
+---
+- src: geerlingguy.pip
+- src: geerlingguy.docker
+# - src: https://www.github.com/bossjones/boss-ansible-role-swapfile
+# - src: https://www.github.com/bossjones/boss-ansible-role-debug
+# - src: https://www.github.com/mrlesmithjr/ansible-motd
+# - src: https://www.github.com/mrlesmithjr/ansible-logrotate
+- src: https://github.com/zzet/ansible-rbenv-role
+  name: zzet.rbenv
+  version: 3.3.6
+
+- src: https://github.com/picotrading/ansible-ulimit
+  version: 22b1f6514204607c9b6028c3369cea31e9935d67
+  name: ulimit

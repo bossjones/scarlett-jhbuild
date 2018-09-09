@@ -124,7 +124,17 @@ Vagrant.configure(2) do |config|
     #     grep -qF 'vagrant - nofile 65536' /etc/security/limits.conf || echo 'vagrant - nofile 65536' >> /etc/security/limits.conf
     # SHELL
 
-end
+# end
+
+    config.vm.provision 'shell' do |s|
+      s.inline = <<-SHELL
+        echo vm.max_map_count=262144 > /etc/sysctl.d/vm_max_map_count.conf
+        sysctl --system
+        grep -qF 'vagrant - nofile 65536' /etc/security/limits.conf || echo 'vagrant - nofile 65536' >> /etc/security/limits.conf
+        grep -qF 'root - nofile 65536' /etc/security/limits.conf || echo 'root - nofile 65536' >> /etc/security/limits.conf
+      SHELL
+      s.privileged = true
+    end
 
     master.vm.provision "ansible" do |ansible|
         ansible.playbook = "site.yml"
@@ -132,5 +142,4 @@ end
         #ansible.raw_arguments = "--list-task"
     end
   end
-
 end

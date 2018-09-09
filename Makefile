@@ -89,3 +89,6 @@ dev-env: pip-deps create-full-local-hierachy clone-sphinx mv-sphinx
 
 docker_build:
 	./scripts/docker-build.sh $(GIT_SHA) $(REPO_ORG) $(REPO_NAME)
+
+download-roles:
+	ansible-galaxy install -r requirements.yml --roles-path ./roles/
