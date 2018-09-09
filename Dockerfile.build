@@ -108,7 +108,8 @@ RUN make bootstrap && \
 
 ENV PATH="~/jhbuild/bin:${PATH}"
 
-RUN /home/${NON_ROOT_USER}/.local/bin/jhbuild build pygobject; \
+RUN /home/${NON_ROOT_USER}/.local/bin/jhbuild build python-365; \
+    /home/${NON_ROOT_USER}/.local/bin/jhbuild build pygobject; \
     /home/${NON_ROOT_USER}/.local/bin/jhbuild build pygobject
 
 ENV PATH="/home/${NON_ROOT_USER}/.local/bin:${PATH}"
