@@ -99,7 +99,11 @@ ENV PATH="~/.local/bin:${PATH}"
 COPY . /home/${NON_ROOT_USER}
 
 RUN make bootstrap && \
-    make dev-env
+    make create-full-local-hierachy && \
+    make clone-sphinx && \
+    make mv-sphinx
+
+# make dev-env
 
 RUN jhbuild build pygobject; \
     jhbuild build pygobject
