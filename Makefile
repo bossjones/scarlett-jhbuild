@@ -23,6 +23,15 @@ TEST_IMAGE_NAME    := $(IMAGE_TAG)
 CONTAINER_NAME     := $(shell echo -n $(IMAGE_TAG) | openssl dgst -sha1 | sed 's/^.* //'  )
 MKDIR              = mkdir
 
+# Docker stuff ( taken from boss-docker-jhbuild-pygobject3 )
+project := $(REPO_NAME)
+projects := $(REPO_NAME)
+username := bossjones
+container_name := $(REPO_NAME)
+CONTAINER_VERSION  = $(shell \cat ./VERSION | awk '{print $1}')
+GIT_BRANCH  = $(shell git rev-parse --abbrev-ref HEAD)
+GIT_SHA     = $(shell git rev-parse HEAD)
+
 .PHONY: list
 list:
 	@$(MAKE) -qp | awk -F':' '/^[a-zA-Z0-9][^$#\/\t=]*:([^=]|$$)/ {split($$1,A,/ /);for(i in A)print A[i]}' | sort
@@ -68,9 +77,15 @@ create-full-local-hierachy:
 	bash scripts/create-full-local-hierachy.sh
 
 clone-sphinx:
-	python scripts/render_jhbuild.py --cmd clone-one --pkg sphinx
+	python scripts/render_jhbuild.py --cmd clone-one --pkg sphinxbase
+
+clone-pocketsphinx:
+	python scripts/render_jhbuild.py --cmd clone-one --pkg pocketsphinx
 
 mv-sphinx:
 	mv -fv ~/gnome/* ~/src/
 
 dev-env: pip-deps create-full-local-hierachy clone-sphinx mv-sphinx
+
+docker_build:
+	./scripts/docker-build.sh $(GIT_SHA) $(REPO_ORG) $(REPO_NAME)
