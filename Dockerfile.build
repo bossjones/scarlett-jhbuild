@@ -101,12 +101,15 @@ COPY . /home/${NON_ROOT_USER}
 RUN make bootstrap && \
     make create-full-local-hierachy && \
     make clone-sphinx && \
+    make clone-pocketsphinx && \
     make mv-sphinx
 
 # make dev-env
 
-RUN jhbuild build pygobject; \
-    jhbuild build pygobject
+ENV PATH="~/jhbuild/bin:${PATH}"
+
+RUN /home/${NON_ROOT_USER}/.local/bin/jhbuild build pygobject; \
+    /home/${NON_ROOT_USER}/.local/bin/jhbuild build pygobject
 
 ENV PATH="/home/${NON_ROOT_USER}/.local/bin:${PATH}"
 ENV PATH="/usr/lib/ccache:${PATH}"
