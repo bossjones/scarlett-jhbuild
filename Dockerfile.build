@@ -98,7 +98,8 @@ ENV PATH="~/.local/bin:${PATH}"
 
 COPY . /home/${NON_ROOT_USER}
 
-RUN make bootstrap && \
+RUN python --user -m ensurepip && \
+    make bootstrap && \
     make dev-env
 
 RUN jhbuild build pygobject; \
