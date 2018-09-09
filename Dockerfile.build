@@ -97,8 +97,9 @@ RUN PYTHONDONTWRITEBYTECODE=true pyenv install 3.7.0
 ENV PATH="~/.local/bin:${PATH}"
 
 RUN make bootstrap && \
-    make dev-env && \
-    jhbuild build pygobject; \
+    make dev-env
+
+RUN jhbuild build pygobject; \
     jhbuild build pygobject
 
 ENV PATH="/home/${NON_ROOT_USER}/.local/bin:${PATH}"
