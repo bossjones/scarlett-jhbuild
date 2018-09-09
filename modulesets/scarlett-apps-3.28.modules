@@ -81,6 +81,7 @@
             <dep package="pixman"/>
             <dep package="libpng"/>
             <dep package="zlib"/>
+            <dep package="fribidi"/>
         </dependencies>
     </autotools>
 
@@ -110,6 +111,7 @@
         <branch repo="github.com" module="pygobject/pycairo.git" checkoutdir="pycairo-python3" revision="v1.16.3"/>
         <dependencies>
             <dep package="python-365"/>
+            <dep package="fribidi"/>
         </dependencies>
     </distutils>
 
