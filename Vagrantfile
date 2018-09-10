@@ -247,6 +247,16 @@ Vagrant.configure(2) do |config|
     #   s.privileged = true
     # end
 
+    config.vm.provision 'shell' do |s|
+      s.inline = <<-SHELL
+      apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys D4284CDD
+      echo "deb https://repo.iovisor.org/apt/bionic bionic main" | tee /etc/apt/sources.list.d/iovisor.list
+      apt-get update
+      apt-get install bcc-tools libbcc-examples linux-headers-$(uname -r) -y
+      SHELL
+      s.privileged = true
+    end
+
     master.vm.provision "ansible" do |ansible|
         ansible.playbook = "site.yml"
         ansible.verbose = "vvvv"

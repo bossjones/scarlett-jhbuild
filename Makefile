@@ -92,3 +92,9 @@ docker_build:
 
 download-roles:
 	ansible-galaxy install -r requirements.yml --roles-path ./roles/
+
+jhbuild-all:
+	~/.local/bin/jhbuild build python-365; \
+	~/.local/bin/jhbuild build meta-scarlett-bootstrap; \
+	~/.local/bin/jhbuild build pygobject; \
+	~/.local/bin/jhbuild build pygobject; \
