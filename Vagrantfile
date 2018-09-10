@@ -149,7 +149,7 @@ Vagrant.configure(2) do |config|
       s.privileged = true
     end
 
-
+    # NOTE: mproving Performance on Low-Memory Linux VMs
     config.vm.provision 'shell' do |s|
       s.inline = <<-SHELL
       # size of swapfile in megabytes
@@ -174,6 +174,11 @@ Vagrant.configure(2) do |config|
       df -h
       cat /proc/swaps
       cat /proc/meminfo | grep Swap
+
+      # https://www.codero.com/knowledge-base/content/3/388/en/improving-performance-on-low_memory-linux-vms.html
+      echo vm.swappiness = 10 >> /etc/sysctl.d/30-vm-swappiness.conf
+      echo vm.vfs_cache_pressure = 50 >> /etc/sysctl.d/30-vm-vfs_cache_pressure.conf
+      sysctl -p
       SHELL
       s.privileged = true
     end
