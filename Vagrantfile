@@ -27,7 +27,10 @@ Vagrant.configure(2) do |config|
     # Create a forwarded port mapping which allows access to a specific port
     # within the machine from a port on the host machine. In the example below,
     # accessing "localhost:8080" will access port 80 on the guest machine.
+    # DNSMASQ
     master.vm.network "forwarded_port", guest: 53, host: 5300
+    # NETDATA
+    master.vm.network "forwarded_port", guest: 19999, host: 29999
 
     # Create a private network, which allows host-only access to the machine
     # using a specific IP.
@@ -46,13 +49,20 @@ Vagrant.configure(2) do |config|
       # user modifiable memory/cpu settings
       vb.memory = 2048
       vb.cpus = 2
-      vb.customize ['modifyvm', :id, '--cpuexecutioncap', '50']
+      vb.customize ['modifyvm', :id, '--cpuexecutioncap', '75']
       vb.customize ['modifyvm', :id, '--chipset', 'ich9']
+
+      # SOURCE: https://datasift.github.io/storyplayer/v2/tips/vagrant/speed-up-virtualbox.html
+      # change the network card hardware for better performance
+      # vb.customize ["modifyvm", :id, "--nictype1", "virtio" ]
+      # vb.customize ["modifyvm", :id, "--nictype2", "virtio" ]
 
       # SOURCE: https://github.com/mitre/unfetter-mediawiki-vagrant/blob/master/Vagrantfile
       # SOURCE: https://serverfault.com/questions/74672/why-should-i-enable-io-apic-in-virtualbox?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
       vb.customize ['modifyvm', :id, '--ioapic', 'on'] # Bug 51473
       # Speed up dns resolution in some cases
+      # suggested fix for slow network performance
+      # see https://github.com/mitchellh/vagrant/issues/1807
       vb.customize ['modifyvm', :id, '--natdnshostresolver1', 'on']
       vb.customize ['modifyvm', :id, '--natdnsproxy1', 'on']
       # Prevent clock drift, see http://stackoverflow.com/a/19492466/323407
