@@ -19,6 +19,9 @@ Vagrant.configure(2) do |config|
     # On Centos the interfaces are not eth0 ... change the playbooks!
     # master.vm.box = "bento/centos-7.5"
 
+    # https://nmrony.info/change-disk-size-of-a-vagrant-box/
+    config.disksize.size = '20GB'
+
     # Disable automatic box update checking. If you disable this, then
     # boxes will only be checked for updates when the user runs
     # `vagrant box outdated`. This is not recommended.
@@ -146,10 +149,50 @@ Vagrant.configure(2) do |config|
       s.privileged = true
     end
 
+
+    config.vm.provision 'shell' do |s|
+      s.inline = <<-SHELL
+      # size of swapfile in megabytes
+      swapsize=8000
+
+      # does the swap file already exist?
+      grep -q "swapfile" /etc/fstab
+
+      # if not then create it
+      if [ $? -ne 0 ]; then
+        echo 'swapfile not found. Adding swapfile.'
+        fallocate -l ${swapsize}M /swapfile
+        chmod 600 /swapfile
+        mkswap /swapfile
+        swapon /swapfile
+        echo '/swapfile none swap defaults 0 0' >> /etc/fstab
+      else
+        echo 'swapfile found. No changes made.'
+      fi
+
+      # output results to terminal
+      df -h
+      cat /proc/swaps
+      cat /proc/meminfo | grep Swap
+      SHELL
+      s.privileged = true
+    end
+
+    # SOURCE: https://peteris.rocks/blog/vagrantfile-for-linux/
+    # use local ubuntu mirror
+    # config.vm.provision :shell, inline: "sed -i 's/archive.ubuntu.com/lv.archive.ubuntu.com/g' /etc/apt/sources.list"
+    # # add swap
+    # config.vm.provision :shell, inline: "fallocate -l 4G /swapfile && chmod 0600 /swapfile && mkswap /swapfile && swapon /swapfile && echo '/swapfile none swap sw 0 0' >> /etc/fstab"
+    # config.vm.provision :shell, inline: "echo vm.swappiness = 10 >> /etc/sysctl.conf && echo vm.vfs_cache_pressure = 50 >> /etc/sysctl.conf && sysctl -p"
+    # # build tools
+    # config.vm.provision :shell, inline: "apt-get update"
+    # config.vm.provision :shell, inline: "apt-get install build-essential libboost-all-dev -y"
+    # config.vm.provision :shell, inline: "wget -O - http://llvm.org/apt/llvm-snapshot.gpg.key | apt-key add -"
+    # config.vm.provision :shell, inline: "apt-get install clang-3.4 -y"
+
     master.vm.provision "ansible" do |ansible|
         ansible.playbook = "site.yml"
         ansible.verbose = "vvvv"
-        #ansible.raw_arguments = "--list-task"
     end
   end
 end
