@@ -28,6 +28,10 @@ fpm -s dir -t deb \
     --depends python3.6-dev \
     --after-install ~/dev/scarlett-jhbuild/afterinstall.sh \
     --before-install ~/dev/scarlett-jhbuild/beforeinstall.sh \
+    --after-remove ~/dev/scarlett-jhbuild/afterremove.sh \
+    --before-remove ~/dev/scarlett-jhbuild/beforeremove.sh \
+    --after-upgrade ~/dev/scarlett-jhbuild/afterupgrade.sh \
+    --before-upgrade ~/dev/scarlett-jhbuild/beforeupgrade.sh \
     jhbuild=/opt/scarlett-jhbuild \
     .local=/opt/jhbuild
 
