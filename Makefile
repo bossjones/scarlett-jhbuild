@@ -98,3 +98,6 @@ jhbuild-all:
 	~/.local/bin/jhbuild build meta-scarlett-bootstrap; \
 	~/.local/bin/jhbuild build pygobject; \
 	~/.local/bin/jhbuild build pygobject; \
+
+build-deb:
+	scripts/mkpkg-deb.sh
