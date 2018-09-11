@@ -35,6 +35,8 @@ Vagrant.configure(2) do |config|
     # NETDATA
     master.vm.network "forwarded_port", guest: 19999, host: 29999
 
+    master.vm.network "forwarded_port", guest: 7777, host: 7777
+
     # Create a private network, which allows host-only access to the machine
     # using a specific IP.
     master.vm.network "private_network", ip: "10.0.0.10"
@@ -192,60 +194,60 @@ Vagrant.configure(2) do |config|
 
     # SOURCE: https://peteris.rocks/blog/vagrantfile-for-linux/
 
-    # # NOTE: mproving Performance on Low-Memory Linux VMs
-    # config.vm.provision 'shell' do |s|
-    #   s.inline = <<-SHELL
-    #   sed -i "s,# deb-src http://archive.ubuntu.com/ubuntu/ bionic main restricted, deb-src http://archive.ubuntu.com/ubuntu/ bionic main restricted,g" /etc/apt/sources.list; \
-    #   sed -i "s,# deb-src http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted,deb-src http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted,g" /etc/apt/sources.list; \
-    #   DEBIAN_FRONTEND=noninteractive apt-get update; apt-get install -y \
-    #   sudo \
-    #   bash-completion \
-    #   apt-file \
-    #   autoconf \
-    #   automake \
-    #   gettext \
-    #   yelp-tools \
-    #   flex \
-    #   bison \
-    #   build-essential \
-    #   ccache \
-    #   curl \
-    #   dbus \
-    #   gir1.2-gtk-3.0 \
-    #   git \
-    #   gobject-introspection \
-    #   lcov \
-    #   libbz2-dev \
-    #   libcairo2-dev \
-    #   libffi-dev \
-    #   libgirepository1.0-dev \
-    #   libglib2.0-dev \
-    #   libgtk-3-0 \
-    #   libreadline-dev \
-    #   libsqlite3-dev \
-    #   libssl-dev \
-    #   ninja-build \
-    #   python3-pip \
-    #   xauth \
-    #   pulseaudio-utils \
-    #   gstreamer1.0-pulseaudio \
-    #   libcanberra-pulse \
-    #   libpulse-dev \
-    #   libpulse-mainloop-glib0 \
-    #   libpulse0 \
-    #   xvfb \
-    #   vim \
-    #  ; \
-    #       apt-get update \
-    #  ; \
-    #   DEBIAN_FRONTEND=noninteractive apt-get install -y gstreamer1.0-plugins* \
-    #  ; \
-    #   DEBIAN_FRONTEND=noninteractive apt-get install -y libegl1-mesa-dev libxklavier-dev libudisks2-dev libdmapsharing-3.0-dev libplist-dev nettle-dev libgphoto2-dev liblcms2-dev libfuse-dev libsane-dev libxt-dev libical-dev libgbm-dev valgrind libusb-1.0-0-dev libxcb-res0-dev xserver-xorg-input-wacom libstartup-notification0-dev libgexiv2-dev libarchive-dev libgl1-mesa-dev libfwup-dev libgnutls28-dev libpoppler-glib-dev libnma-dev libtag1-dev libusb-1.0-0-dev libndp-dev uuid-dev libgraphviz-dev libbluray-dev libcdio-paranoia-dev libsmbclient-dev libmtp-dev libv4l-dev libnfs-dev libpwquality-dev libxft-dev libsystemd-dev libnss3-dev libseccomp-dev libexiv2-dev check libhunspell-dev libmtdev-dev libanthy-dev libxrandr-dev libxdamage-dev libopus-dev libxi-dev libp11-kit-dev libtasn1-6-dev libwavpack-dev libnl-route-3-dev libcanberra-gtk-dev libxtst-dev libexempi-dev libudev-dev libplymouth-dev libxfixes-dev libunwind-dev libcaribou-dev libpolkit-agent-1-dev libavahi-gobject-dev libpolkit-gobject-1-dev dbus-tests libnl-genl-3-dev libxcb-dri2-0-dev liboauth-dev libpsl-dev libdrm-dev libevdev-dev libnspr4-dev libcanberra-gtk3-dev libexif-dev libvpx-dev libusbredirhost-dev libsndfile1-dev libxkbfile-dev libelf-dev libhangul-dev libxkbcommon-dev libxml2-dev libdotconf-dev libmusicbrainz5-dev libxslt1-dev libraw-dev libdbus-glib-1-dev libegl1-mesa-dev libnl-3-dev libxi-dev libsource-highlight-dev libvirt-dev libxcb-randr0-dev libimobiledevice-dev libgles2-mesa-dev libxkbcommon-x11-dev nettle-dev libxcomposite-dev libflac-dev libxcursor-dev libdvdread-dev libproxy-dev libkyotocabinet-dev libwebkit2gtk-4.0-dev libepoxy-dev flex valac xmlto texinfo xwayland libcups2-dev ruby libgpgme-dev gperf wget cmake sassc argyll intltool desktop-file-utils docbook-utils ragel doxygen yasm cargo libunistring-dev libmpfr-dev libhyphen-dev libkrb5-dev ppp-dev libxinerama-dev libmpc-dev libsasl2-dev libldap2-dev libpam0g-dev libdb5.3-dev libcap-dev libtiff5-dev libmagic-dev libgcrypt20-dev libiw-dev libjpeg-turbo8-dev libyaml-dev libwebp-dev libespeak-dev intltool libxslt1-dev docbook-xml docbook-xsl libgudev-1.0-dev gir1.2-gudev-1.0 libfl-dev fcitx-libs-dev libxcb-xkb-dev doxygen xorg-dev libepoxy-dev libdbus-1-dev libjpeg-dev libtiff-dev desktop-file-utils libwayland-egl1-mesa ragel libxml2-dev libxft-dev xmlto libxtst-dev xutils-dev python-six python-pip \
-    #  ; \
-    #       rm -rf /var/lib/apt/lists/*
-    #   SHELL
-    #   s.privileged = true
-    # end
+    # NOTE: mproving Performance on Low-Memory Linux VMs
+    config.vm.provision 'shell' do |s|
+      s.inline = <<-SHELL
+      sed -i "s,# deb-src http://archive.ubuntu.com/ubuntu/ bionic main restricted, deb-src http://archive.ubuntu.com/ubuntu/ bionic main restricted,g" /etc/apt/sources.list; \
+      sed -i "s,# deb-src http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted,deb-src http://archive.ubuntu.com/ubuntu/ bionic-updates main restricted,g" /etc/apt/sources.list; \
+      DEBIAN_FRONTEND=noninteractive apt-get update; apt-get install -y \
+      sudo \
+      bash-completion \
+      apt-file \
+      autoconf \
+      automake \
+      gettext \
+      yelp-tools \
+      flex \
+      bison \
+      build-essential \
+      ccache \
+      curl \
+      dbus \
+      gir1.2-gtk-3.0 \
+      git \
+      gobject-introspection \
+      lcov \
+      libbz2-dev \
+      libcairo2-dev \
+      libffi-dev \
+      libgirepository1.0-dev \
+      libglib2.0-dev \
+      libgtk-3-0 \
+      libreadline-dev \
+      libsqlite3-dev \
+      libssl-dev \
+      ninja-build \
+      python3-pip \
+      xauth \
+      pulseaudio-utils \
+      gstreamer1.0-pulseaudio \
+      libcanberra-pulse \
+      libpulse-dev \
+      libpulse-mainloop-glib0 \
+      libpulse0 \
+      xvfb \
+      vim \
+     ; \
+          apt-get update \
+     ; \
+      DEBIAN_FRONTEND=noninteractive apt-get install -y gstreamer1.0-plugins* \
+     ; \
+      DEBIAN_FRONTEND=noninteractive apt-get install -y libegl1-mesa-dev libxklavier-dev libudisks2-dev libdmapsharing-3.0-dev libplist-dev nettle-dev libgphoto2-dev liblcms2-dev libfuse-dev libsane-dev libxt-dev libical-dev libgbm-dev valgrind libusb-1.0-0-dev libxcb-res0-dev xserver-xorg-input-wacom libstartup-notification0-dev libgexiv2-dev libarchive-dev libgl1-mesa-dev libfwup-dev libgnutls28-dev libpoppler-glib-dev libnma-dev libtag1-dev libusb-1.0-0-dev libndp-dev uuid-dev libgraphviz-dev libbluray-dev libcdio-paranoia-dev libsmbclient-dev libmtp-dev libv4l-dev libnfs-dev libpwquality-dev libxft-dev libsystemd-dev libnss3-dev libseccomp-dev libexiv2-dev check libhunspell-dev libmtdev-dev libanthy-dev libxrandr-dev libxdamage-dev libopus-dev libxi-dev libp11-kit-dev libtasn1-6-dev libwavpack-dev libnl-route-3-dev libcanberra-gtk-dev libxtst-dev libexempi-dev libudev-dev libplymouth-dev libxfixes-dev libunwind-dev libcaribou-dev libpolkit-agent-1-dev libavahi-gobject-dev libpolkit-gobject-1-dev dbus-tests libnl-genl-3-dev libxcb-dri2-0-dev liboauth-dev libpsl-dev libdrm-dev libevdev-dev libnspr4-dev libcanberra-gtk3-dev libexif-dev libvpx-dev libusbredirhost-dev libsndfile1-dev libxkbfile-dev libelf-dev libhangul-dev libxkbcommon-dev libxml2-dev libdotconf-dev libmusicbrainz5-dev libxslt1-dev libraw-dev libdbus-glib-1-dev libegl1-mesa-dev libnl-3-dev libxi-dev libsource-highlight-dev libvirt-dev libxcb-randr0-dev libimobiledevice-dev libgles2-mesa-dev libxkbcommon-x11-dev nettle-dev libxcomposite-dev libflac-dev libxcursor-dev libdvdread-dev libproxy-dev libkyotocabinet-dev libwebkit2gtk-4.0-dev libepoxy-dev flex valac xmlto texinfo xwayland libcups2-dev ruby libgpgme-dev gperf wget cmake sassc argyll intltool desktop-file-utils docbook-utils ragel doxygen yasm cargo libunistring-dev libmpfr-dev libhyphen-dev libkrb5-dev ppp-dev libxinerama-dev libmpc-dev libsasl2-dev libldap2-dev libpam0g-dev libdb5.3-dev libcap-dev libtiff5-dev libmagic-dev libgcrypt20-dev libiw-dev libjpeg-turbo8-dev libyaml-dev libwebp-dev libespeak-dev intltool libxslt1-dev docbook-xml docbook-xsl libgudev-1.0-dev gir1.2-gudev-1.0 libfl-dev fcitx-libs-dev libxcb-xkb-dev doxygen xorg-dev libepoxy-dev libdbus-1-dev libjpeg-dev libtiff-dev desktop-file-utils libwayland-egl1-mesa ragel libxml2-dev libxft-dev xmlto libxtst-dev xutils-dev python-six python-pip \
+     ; \
+          rm -rf /var/lib/apt/lists/*
+      SHELL
+      s.privileged = true
+    end
 
     config.vm.provision 'shell' do |s|
       s.inline = <<-SHELL
