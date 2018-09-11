@@ -20,7 +20,7 @@ Vagrant.configure(2) do |config|
     # master.vm.box = "bento/centos-7.5"
 
     # https://nmrony.info/change-disk-size-of-a-vagrant-box/
-    config.disksize.size = '20GB'
+    config.disksize.size = '25GB'
 
     # Disable automatic box update checking. If you disable this, then
     # boxes will only be checked for updates when the user runs

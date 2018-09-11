@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 _DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 pushd ~/
@@ -36,10 +38,11 @@ pkg_vendor="Tony Dark Industries"
 #     jhbuild=/opt/scarlett-jhbuild \
 #     .local=/opt/jhbuild
 
-fpm --name $pkg_name \
-    --version $pkg_version \
+fpm --debug \
+    --name ${pkg_name} \
+    --version ${pkg_version} \
     --iteration ${pkg_release} \
-    --architecture $pkg_arch \
+    --architecture ${pkg_arch} \
     --after-install $HOME/dev/scarlett-jhbuild/scripts/afterinstall.sh \
     --before-install $HOME/dev/scarlett-jhbuild/scripts/beforeinstall.sh \
     --after-remove $HOME/dev/scarlett-jhbuild/scripts/afterremove.sh \

@@ -37,4 +37,6 @@ ENV CI true
 ENV PATH="~/.local/bin:${PATH}"
 
 ENV PATH="/home/${NON_ROOT_USER}/.local/bin:${PATH}"
+ENV PATH="/opt/scarlett-jhbuild/jhbuild/bin:${PATH}"
+ENV PATH="/opt/jhbuild/bin:${PATH}"
 # ENV PATH="/usr/lib/ccache:${PATH}"
