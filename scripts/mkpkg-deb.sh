@@ -14,24 +14,42 @@ pkg_maintainer="jarvis@theblacktonystark.com"
 pkg_url="https://github.com/bossjones/scarlett-jhbuild"
 pkg_vendor="Tony Dark Industries"
 
-fpm -s dir -t deb \
-    --name $pkg_name \
-    --description $pkg_description \
-    --license $pkg_license \
-    --maintainer $pkg_maintainer \
+# fpm --name $pkg_name \
+#     --description $pkg_description \
+#     --license $pkg_license \
+#     --maintainer $pkg_maintainer \
+#     --version $pkg_version \
+#     --iteration ${pkg_release} \
+#     --architecture $pkg_arch \
+#     --url $pkg_url \
+#     --vendor $pkg_vendor \
+#     --after-install $HOME/dev/scarlett-jhbuild/afterinstall.sh \
+#     --before-install $HOME/dev/scarlett-jhbuild/beforeinstall.sh \
+#     --after-remove $HOME/dev/scarlett-jhbuild/afterremove.sh \
+#     --before-remove $HOME/dev/scarlett-jhbuild/beforeremove.sh \
+#     --after-upgrade $HOME/dev/scarlett-jhbuild/afterupgrade.sh \
+#     --before-upgrade $HOME/dev/scarlett-jhbuild/beforeupgrade.sh \
+#     --depends 'python2.7-dev' \
+#     --depends 'python3.6-dev' \
+#     -s dir \
+#     -t deb \
+#     jhbuild=/opt/scarlett-jhbuild \
+#     .local=/opt/jhbuild
+
+fpm --name $pkg_name \
     --version $pkg_version \
     --iteration ${pkg_release} \
     --architecture $pkg_arch \
-    --url $pkg_url \
-    --vendor $pkg_vendor \
-    --depends python2.7-dev \
-    --depends python3.6-dev \
-    --after-install ~/dev/scarlett-jhbuild/afterinstall.sh \
-    --before-install ~/dev/scarlett-jhbuild/beforeinstall.sh \
-    --after-remove ~/dev/scarlett-jhbuild/afterremove.sh \
-    --before-remove ~/dev/scarlett-jhbuild/beforeremove.sh \
-    --after-upgrade ~/dev/scarlett-jhbuild/afterupgrade.sh \
-    --before-upgrade ~/dev/scarlett-jhbuild/beforeupgrade.sh \
+    --after-install $HOME/dev/scarlett-jhbuild/scripts/afterinstall.sh \
+    --before-install $HOME/dev/scarlett-jhbuild/scripts/beforeinstall.sh \
+    --after-remove $HOME/dev/scarlett-jhbuild/scripts/afterremove.sh \
+    --before-remove $HOME/dev/scarlett-jhbuild/scripts/beforeremove.sh \
+    --after-upgrade $HOME/dev/scarlett-jhbuild/scripts/afterupgrade.sh \
+    --before-upgrade $HOME/dev/scarlett-jhbuild/scripts/beforeupgrade.sh \
+    --depends 'python2.7-dev' \
+    --depends 'python3.6-dev' \
+    -s dir \
+    -t deb \
     jhbuild=/opt/scarlett-jhbuild \
     .local=/opt/jhbuild
 
