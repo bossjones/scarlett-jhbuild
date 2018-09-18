@@ -115,4 +115,4 @@ deb-test-build:
 	--file "Dockerfile.simple" $(shell pwd)
 
 run-fpm-bash:
-	docker run  --rm --security-opt label=disable --volume "$(pwd)/:/home/developer/app" --workdir "/home/developer/app" --tty --interactive "$(REPO_ORG)/$(REPO_NAME)-simple:latest" bash
+	docker run  --rm --security-opt label=disable --volume "$$(pwd)/:/home/developer/app" --workdir "/home/developer/app" --tty --interactive "$(REPO_ORG)/$(REPO_NAME)-simple:latest" bash
