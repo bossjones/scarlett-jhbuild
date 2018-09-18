@@ -116,3 +116,6 @@ deb-test-build:
 
 run-fpm-bash:
 	docker run  --rm --security-opt label=disable --volume "$$(pwd)/:/home/developer/app" --workdir "/home/developer/app" --tty --interactive "$(REPO_ORG)/$(REPO_NAME)-simple:latest" bash
+
+gpr:
+	git pull --rebase
