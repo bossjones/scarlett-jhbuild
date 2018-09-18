@@ -50,7 +50,6 @@ fpm --debug \
     --after-upgrade $HOME/dev/scarlett-jhbuild/scripts/afterupgrade.sh \
     --before-upgrade $HOME/dev/scarlett-jhbuild/scripts/beforeupgrade.sh \
     --depends 'python2.7-dev' \
-    --depends 'python3.6-dev' \
     --exclude *.py[co] \
     --exclude *__pycache__ \
     --exclude *.git \
