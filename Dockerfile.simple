@@ -45,7 +45,7 @@ RUN curl -fsSL "https://github.com/rbenv/rbenv/archive/v1.1.1.tar.gz" -o /opt/rb
     curl -fsSL "https://github.com/rbenv/ruby-build/archive/v20180822.tar.gz" -o /opt/ruby-build.tar.gz && \
     mkdir -p /opt/rbenv/plugins/ruby-build && \
     tar -C /opt/rbenv/plugins/ruby-build -xzf /opt/ruby-build.tar.gz --strip-components 1 \
-    && rm /opt/ruby-build.tar.gz \
+    && rm /opt/ruby-build.tar.gz
 
 # RUN curl -fsSL "https://github.com/rbenv/rbenv/archive/v1.1.1.tar.gz" -o /opt/rbenv.tar.gz \
 #     && tar -C /opt/ -xzf /opt/rbenv.tar.gz \
