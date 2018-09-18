@@ -11,6 +11,58 @@ ENV HOST_USER_ID ${HOST_USER_ID}
 ARG HOST_GROUP_ID=1000
 ENV HOST_GROUP_ID ${HOST_GROUP_ID}
 
+
+# Install packages for building ruby
+RUN apt-get update && \
+    apt-get install -y --force-yes build-essential curl git && \
+    apt-get install -y --force-yes zlib1g-dev libssl-dev libreadline-dev libyaml-dev libxml2-dev libxslt-dev bash-completion vim && \
+    apt-get clean
+
+# # Install rbenv and ruby-build
+# RUN git clone https://github.com/sstephenson/rbenv.git /root/.rbenv
+# RUN git clone https://github.com/sstephenson/ruby-build.git /root/.rbenv/plugins/ruby-build
+# RUN /root/.rbenv/plugins/ruby-build/install.sh
+# ENV PATH /root/.rbenv/bin:$PATH
+# RUN echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh # or /etc/profile
+# RUN echo 'eval "$(rbenv init -)"' >> .bashrc
+
+# # Install multiple versions of ruby
+# ENV CONFIGURE_OPTS --disable-install-doc
+# ADD ./versions.txt /root/versions.txt
+# RUN xargs -L 1 rbenv install < /root/versions.txt
+
+# # Install Bundler for each version of ruby
+# RUN echo 'gem: --no-rdoc --no-ri' >> /.gemrc
+# RUN bash -l -c 'for v in $(cat /root/versions.txt); do rbenv global $v; gem install bundler; done'
+
+# rbenv and ruby-build
+RUN curl -fsSL "https://github.com/rbenv/rbenv/archive/v1.1.1.tar.gz" -o /opt/rbenv.tar.gz \
+    && tar -C /opt/ -xzf /opt/rbenv.tar.gz \
+    && rm /opt/rbenv.tar.gz && \
+    curl -fsSL "https://github.com/rbenv/ruby-build/archive/v20180822.tar.gz" -o /opt/ruby-build.tar.gz \
+    && tar -C /opt/rbenv/plugins/ -xzf /opt/ruby-build.tar.gz \
+    && rm /opt/ruby-build.tar.gz
+ADD rbenv.sh /etc/profile.d/rbenv.sh
+
+# # install rubys
+# RUN bash -c 'set -euo pipefail; \
+#     . /etc/profile.d/rbenv.sh; \
+#     curl -fsSL "https://github.com/rbenv/rbenv-each/archive/master.tar.gz" -o /opt/rbenv.tar.gz \
+#     && tar -C /opt/ -xzf rbenv.tar.gz \
+#     && rm rbenv.tar.gz && \
+
+
+#     git clone https://github.com/znz/rbenv-plug /opt/rbenv/plugins/rbenv-plug; \
+#     rbenv plug each; \
+#     export CONFIGURE_OPTS="--disable-install-rdoc --disable-install-doc"; \
+#     for v in \
+#     2.4.2 \
+#     ; do \
+#     echo install $v; \
+#     rbenv install $v; \
+#     done \
+#     '
+
 RUN set -xe \
     && useradd -U -d /home/${NON_ROOT_USER} -m -r -G adm,tty,audio ${NON_ROOT_USER} \
     && usermod -a -G ${NON_ROOT_USER} -s /bin/bash -u ${HOST_USER_ID} ${NON_ROOT_USER} \
