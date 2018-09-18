@@ -110,7 +110,7 @@ docker_dev:
 	./scripts/docker-tag.sh $(GIT_SHA) $(REPO_ORG) $(REPO_NAME)
 	./scripts/docker-dev.sh $(GIT_SHA) $(REPO_ORG) $(REPO_NAME)
 
-deb-test:
+deb-test-build:
 	docker build --build-arg HOST_USER_ID=$(shell id -u) --tag "$(REPO_ORG)/$(REPO_NAME)-simple:latest" \
 	--file "Dockerfile.simple" $(shell pwd)
 

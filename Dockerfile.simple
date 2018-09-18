@@ -14,8 +14,8 @@ ENV HOST_GROUP_ID ${HOST_GROUP_ID}
 
 # Install packages for building ruby
 RUN apt-get update && \
-    apt-get install -y --force-yes build-essential curl git && \
-    apt-get install -y --force-yes zlib1g-dev libssl-dev libreadline-dev libyaml-dev libxml2-dev libxslt-dev bash-completion vim && \
+    apt-get install -y build-essential curl git && \
+    apt-get install -y zlib1g-dev libssl-dev libreadline-dev libyaml-dev libxml2-dev libxslt-dev bash-completion vim && \
     apt-get clean
 
 # # Install rbenv and ruby-build
