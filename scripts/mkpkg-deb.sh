@@ -48,8 +48,12 @@ fpm --name $pkg_name \
     --before-upgrade $HOME/dev/scarlett-jhbuild/scripts/beforeupgrade.sh \
     --depends 'python2.7-dev' \
     --depends 'python3.6-dev' \
+    --exclude *.py[co] \
+    --exclude *__pycache__ \
+    --exclude *.git \
     -s dir \
     -t deb \
+    --verbose \
     jhbuild=/opt/scarlett-jhbuild \
     .local=/opt/jhbuild
 

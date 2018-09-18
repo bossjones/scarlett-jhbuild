@@ -101,3 +101,11 @@ jhbuild-all:
 
 build-deb:
 	scripts/mkpkg-deb.sh
+
+docker_tag:
+	./scripts/docker-tag.sh $(GIT_SHA) $(REPO_ORG) $(REPO_NAME)
+
+docker_dev:
+	./scripts/docker-build.sh $(GIT_SHA) $(REPO_ORG) $(REPO_NAME)
+	./scripts/docker-tag.sh $(GIT_SHA) $(REPO_ORG) $(REPO_NAME)
+	./scripts/docker-dev.sh $(GIT_SHA) $(REPO_ORG) $(REPO_NAME)
