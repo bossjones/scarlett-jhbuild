@@ -85,14 +85,19 @@ RUN curl -fsSL "https://github.com/rbenv/rbenv/archive/v1.1.1.tar.gz" -o /opt/rb
     rbenv global $v; \
     gem install --no-rdoc --no-ri bundler fpm; \
     done \
-    ' && \
-    chown ${NON_ROOT_USER}:${NON_ROOT_USER} -Rv /opt/rbenv /etc/profile.d/rbenv.sh
+    ' \
+    && \
+    echo 'export PATH="~/.local/bin:${PATH}"' >> /etc/profile.d/${NON_ROOT_USER}.sh && \
+    echo 'export PATH="/home/${NON_ROOT_USER}/.local/bin:${PATH}"' >> /etc/profile.d/${NON_ROOT_USER}.sh && \
+    echo 'export PATH="/opt/scarlett-jhbuild/jhbuild/bin:${PATH}"' >> /etc/profile.d/${NON_ROOT_USER}.sh && \
+    echo 'export PATH="/opt/jhbuild/bin:${PATH}"' >> /etc/profile.d/${NON_ROOT_USER}.sh && \
+    chown ${NON_ROOT_USER}:${NON_ROOT_USER} -Rv /opt/rbenv /etc/profile.d/rbenv.sh /etc/profile.d/${NON_ROOT_USER}.sh
 
-# USER ${NON_ROOT_USER}
-# WORKDIR /home/${NON_ROOT_USER}
+USER ${NON_ROOT_USER}
+WORKDIR /home/${NON_ROOT_USER}
 
-# ENV LANG C.UTF-8
-# ENV CI true
+ENV LANG C.UTF-8
+ENV CI true
 
 
 # ENV PATH="~/.local/bin:${PATH}"
@@ -100,4 +105,4 @@ RUN curl -fsSL "https://github.com/rbenv/rbenv/archive/v1.1.1.tar.gz" -o /opt/rb
 # ENV PATH="/home/${NON_ROOT_USER}/.local/bin:${PATH}"
 # ENV PATH="/opt/scarlett-jhbuild/jhbuild/bin:${PATH}"
 # ENV PATH="/opt/jhbuild/bin:${PATH}"
-# # ENV PATH="/usr/lib/ccache:${PATH}"
+# ENV PATH="/usr/lib/ccache:${PATH}"
