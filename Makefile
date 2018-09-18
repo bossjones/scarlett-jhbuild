@@ -123,3 +123,9 @@ gpr:
 .PHONY: cp-deb
 cp-deb:
 	cp -av ~/*.deb .
+	@for file in $(shell find $$HOME/ -name "*.deb" -print); do \
+		echo $$file; \
+		f=$$(basename $$file); \
+		cp -fv $$file $(CURDIR)/$f; \
+	done; \
+	ls -lta $(CURDIR)/$f; \
