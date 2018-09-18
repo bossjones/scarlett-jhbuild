@@ -114,8 +114,12 @@ deb-test-build:
 	docker build --build-arg HOST_USER_ID=$(shell id -u) --tag "$(REPO_ORG)/$(REPO_NAME)-simple:latest" \
 	--file "Dockerfile.simple" $(shell pwd)
 
-run-fpm-bash:
+run-fpm-bash: cp-deb
 	docker run  --rm --security-opt label=disable --volume "$$(pwd)/:/home/developer/app" --workdir "/home/developer/app" --tty --interactive "$(REPO_ORG)/$(REPO_NAME)-simple:latest" bash
 
 gpr:
 	git pull --rebase
+
+.PHONY: cp-deb
+cp-deb:
+	cp -av ~/*.deb .
