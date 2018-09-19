@@ -34,6 +34,22 @@
 
 # :65534:65534
 
+# cd /opt/scarlett-jhbuild/jhbuild/bin \
+# && { [ -e easy_install ] || ln -s easy_install-* easy_install; } \
+# && ln -s idle3 idle \
+# && ln -s pydoc3 pydoc \
+# && ln -s python3 python \
+# && ln -s python3-config python-config \
+# && pip3 install virtualenv virtualenvwrapper ipython
+
+
+# /home/vagrant/jhbuild/bin/python3
+
+# cd /opt/scarlett-jhbuild/jhbuild/bin \
+
+# find /opt/scarlett-jhbuild -type f -print0 | xargs -0 sed 's@/home/vagrant@/opt@g' | grep '/opt'
+
+
 mkdir -p /etc/scarlett-jhbuild
 cat << EOF > /etc/scarlett-jhbuild/jhbuildrc
 # -*- mode: python -*-
@@ -76,5 +92,14 @@ os.environ['PROJECT_HOME'] = '/opt/scarlett-jhbuild/dev'
 os.environ['GI_TYPELIB_PATH'] = '/opt/scarlett-jhbuild/jhbuild/lib/girepository-1.0'
 EOF
 
+echo '[CHMOD 755 all dirs]'
+sudo find /opt/jhbuild/.local/ -type d -exec chmod 755 {} \;
+
 echo '[CHOWN] nobody:nobody'
-sudo chown -R 65534:65534 /opt/scarlett-jhbuild /opt/gnome /opt/jhbuild
+sudo chown -R 65534:65534 /opt/scarlett-jhbuild /opt/gnome /opt/jhbuild /etc/scarlett-jhbuild/jhbuildrc
+
+# jhbuild-scarlett-deps_1.0.0-1_amd64.deb
+echo "/opt/scarlett-jhbuild/jhbuild/lib" > /etc/ld.so.conf.d/jhbuild-scarlett-deps-x86_64.conf
+echo "/opt/jhbuild/.local/lib" >> /etc/ld.so.conf.d/jhbuild-scarlett-deps-x86_64.conf
+
+/sbin/ldconfig

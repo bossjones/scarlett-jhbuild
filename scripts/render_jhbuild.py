@@ -367,6 +367,46 @@ os.environ['PYTHONSTARTUP'] = '{PYTHONSTARTUP}'
 os.environ['GI_TYPELIB_PATH'] = '{PREFIX}/lib/girepository-1.0'
 """
 
+JHBUILD_SYSTEM_TEMPLATE = """
+# -*- mode: python -*-
+# -*- coding: utf-8 -*-
+import os
+prefix='/opt/scarlett-jhbuild/jhbuild'
+checkoutroot='/opt/gnome'
+modulesets_dir = prefix + '/modulesets'
+# moduleset = 'scarlett-world-lean.modules'
+moduleset = 'scarlett-apps-3.28.modules'
+modules = [ 'python-365', 'glib', 'fribidi', 'gobject-introspection', 'gstreamer', 'gst-libav', 'gst-plugins-bad', 'gst-plugins-base', 'gst-plugins-good', 'gst-plugins-ugly', 'gst-python', 'gtk+-3', 'pycairo', 'pygobject' ]
+module_mesonargs['gstreamer'] = '-Ddisable_gtkdoc=true -Dgtk_doc=false'
+autogenargs='--disable-gtk-doc'
+skip = [ "WebKit" ]
+interact = False
+makeargs = '-j4'
+build_policy = 'updated-deps'
+use_local_modulesets = True
+os.environ['CFLAGS'] = '-fPIC -O0 -ggdb -fno-inline -fno-omit-frame-pointer'
+# FIXME: Temp python -> python3
+# os.environ['PYTHON'] = 'python'
+os.environ['PYTHON'] = 'python3'
+os.environ['GSTREAMER'] = '1.0'
+os.environ['ENABLE_PYTHON3'] = 'yes'
+os.environ['ENABLE_GTK'] = 'yes'
+os.environ['PYTHON_VERSION'] = '3.6'
+os.environ['MAKEFLAGS'] = '-j4'
+os.environ['PREFIX'] = '/opt/scarlett-jhbuild/jhbuild'
+os.environ['JHBUILD'] = '/opt/gnome'
+os.environ['PATH'] = '/usr/lib/ccache:/opt/scarlett-jhbuild/jhbuild/bin:~/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+os.environ['LD_LIBRARY_PATH'] = '/opt/scarlett-jhbuild/jhbuild/lib:/usr/lib'
+os.environ['PYTHONPATH'] = '/opt/scarlett-jhbuild/jhbuild/lib/python3.6/site-packages'
+os.environ['PKG_CONFIG_PATH'] = '/opt/scarlett-jhbuild/jhbuild/lib/pkgconfig:/opt/scarlett-jhbuild/jhbuild/share/pkgconfig:/usr/lib/pkgconfig'
+# -------------------------------------------------
+os.environ['XDG_DATA_DIRS'] = '/opt/scarlett-jhbuild/jhbuild/share:/usr/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop'
+os.environ['XDG_CONFIG_DIRS'] = '/opt/scarlett-jhbuild/jhbuild/etc/xdg'
+os.environ['CC'] = 'gcc'
+os.environ['PROJECT_HOME'] = '/opt/scarlett-jhbuild/dev'
+os.environ['GI_TYPELIB_PATH'] = '/opt/scarlett-jhbuild/jhbuild/lib/girepository-1.0'
+"""
+
 
 # SOURCE: https://github.com/ARMmbed/mbed-cli/blob/f168237fabd0e32edcb48e214fc6ce2250046ab3/test/util.py
 # Process execution
@@ -813,29 +853,32 @@ def setup_all_envs():
     setup_checkoutroot()
 
 
-def write_jhbuildrc():
+def write_jhbuildrc(use_system=False):
     print("MAKING DIR IF IT DOESN'T EXIST: {}".format(os.path.abspath(os.path.join(PATH_TO_JHBUILDRC, os.pardir))))
     mkdir_p(os.path.abspath(os.path.join(PATH_TO_JHBUILDRC, os.pardir)))
-    rendered_jhbuild = render_jhbuildrc_dry_run()
+    rendered_jhbuild = render_jhbuildrc_dry_run(use_system=use_system)
     with open(PATH_TO_JHBUILDRC, "w+") as fp:
         fp.write(rendered_jhbuild)
 
 
-def render_jhbuildrc_dry_run():
-    rendered_jhbuild = JHBUILD_TEMPLATE.format(
-        PREFIX=environ_get("PREFIX"),
-        CHECKOUTROOT=environ_get("CHECKOUTROOT"),
-        CFLAGS=environ_get("CFLAGS"),
-        PYTHON_VERSION=environ_get("PYTHON_VERSION"),
-        PATH=environ_get("PATH"),
-        LD_LIBRARY_PATH=environ_get("LD_LIBRARY_PATH"),
-        PYTHONPATH=environ_get("PYTHONPATH"),
-        PKG_CONFIG_PATH=environ_get("PKG_CONFIG_PATH"),
-        XDG_DATA_DIRS=environ_get("XDG_DATA_DIRS"),
-        XDG_CONFIG_DIRS=environ_get("XDG_CONFIG_DIRS"),
-        PROJECT_HOME=environ_get("PROJECT_HOME"),
-        PYTHONSTARTUP=environ_get("PYTHONSTARTUP"),
-    )
+def render_jhbuildrc_dry_run(use_system=False):
+    if use_system:
+        rendered_jhbuild = JHBUILD_SYSTEM_TEMPLATE
+    else:
+        rendered_jhbuild = JHBUILD_TEMPLATE.format(
+            PREFIX=environ_get("PREFIX"),
+            CHECKOUTROOT=environ_get("CHECKOUTROOT"),
+            CFLAGS=environ_get("CFLAGS"),
+            PYTHON_VERSION=environ_get("PYTHON_VERSION"),
+            PATH=environ_get("PATH"),
+            LD_LIBRARY_PATH=environ_get("LD_LIBRARY_PATH"),
+            PYTHONPATH=environ_get("PYTHONPATH"),
+            PKG_CONFIG_PATH=environ_get("PKG_CONFIG_PATH"),
+            XDG_DATA_DIRS=environ_get("XDG_DATA_DIRS"),
+            XDG_CONFIG_DIRS=environ_get("XDG_CONFIG_DIRS"),
+            PROJECT_HOME=environ_get("PROJECT_HOME"),
+            PYTHONSTARTUP=environ_get("PYTHONSTARTUP"),
+        )
     Console.message("----------------[render_jhbuildrc_dry_run]----------------")
     Console.message(rendered_jhbuild)
 
@@ -890,11 +933,22 @@ def main(context):
         compile_jhbuild()
     elif context["cmd"] == "render-dry-run":
         setup_all_envs()
-        render_jhbuildrc_dry_run()
+        use_system = False
+
+        if context["system"]:
+            use_system = context["system"]
+
+        render_jhbuildrc_dry_run(use_system=use_system)
     elif context["cmd"] == "render":
         setup_all_envs()
-        render_jhbuildrc_dry_run()
-        write_jhbuildrc()
+
+        use_system = False
+
+        if context["system"]:
+            use_system = context["system"]
+
+        render_jhbuildrc_dry_run(use_system=use_system)
+        write_jhbuildrc(use_system=use_system)
     elif context["cmd"] == "pip-install-meson":
         pip_install_meson()
     elif context["cmd"] == "compile-gtk-doc":
@@ -923,11 +977,12 @@ if __name__ == "__main__":
         help="cmd to run. Options [bootstrap, dump_env, compile, render-dry-run, render, pip-install-meson, compile-gtk-doc, clone-all, get-all-tar-files, untar-files, build, compile-all, clone-one]",
     )
     parser.add_argument("--pkg", type=str, required=False, help="Package name.")
+    parser.add_argument("--system", action = 'store_true', required=False, default=False, help="Set this flag if you want to do a system wide install")
 
     args, extra_args = parser.parse_known_args()
 
     assert args.cmd != None
 
-    context = {"cmd": args.cmd, "pkg": args.pkg}
+    context = {"cmd": args.cmd, "pkg": args.pkg, "system": args.system}
 
     main(context)
