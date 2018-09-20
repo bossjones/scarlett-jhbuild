@@ -365,7 +365,7 @@ os.environ['XDG_DATA_DIRS'] = '{XDG_DATA_DIRS}'
 os.environ['XDG_CONFIG_DIRS'] = '{XDG_CONFIG_DIRS}'
 os.environ['CC'] = 'gcc'
 os.environ['PROJECT_HOME'] = '{PROJECT_HOME}'
-os.environ['PYTHONSTARTUP'] = '{PYTHONSTARTUP}'
+# os.environ['PYTHONSTARTUP'] = '{PYTHONSTARTUP}'
 os.environ['GI_TYPELIB_PATH'] = '{PREFIX}/lib/girepository-1.0'
 """
 
