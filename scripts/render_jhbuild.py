@@ -25,17 +25,26 @@ elif PY3:
 
 USE_SYSTEM = False
 
-USERNAME = os.environ.get("USERNAME", default=getpass.getuser())
-USERHOME = os.environ.get("USERHOME", os.path.expanduser("~"))
-PATH_TO_JHBUILDRC = os.environ.get("PATH_TO_JHBUILDRC", os.path.join(USERHOME + "/.config", "jhbuildrc"))
-PREFIX = os.environ.get("PREFIX", os.path.join(USERHOME, "jhbuild"))
-CHECKOUTROOT = os.environ.get("CHECKOUTROOT", os.path.join(USERHOME, "gnome"))
-PROJECT_HOME = os.environ.get("PROJECT_HOME", os.path.join(USERHOME, "dev"))
-PY_VERSION = os.environ.get("PY_VERSION", "3.6")
-PY_VERSION_FULL = os.environ.get("PY_VERSION_FULL", "{}.5".format(PY_VERSION))
-JHBUILD_GITHUB_URL = os.environ.get("JHBUILD_GITHUB_URL", "https://github.com/GNOME/jhbuild.git")
-JHBUILD_SHA = os.environ.get("JHBUILD_SHA", "master")
-PATH_TO_JHBUILD_BIN = os.environ.get("PATH_TO_JHBUILD_BIN", os.path.join(USERHOME + ".local/bin", "jhbuild"))
+USERNAME = environ_get("USERNAME", default=getpass.getuser())
+USERHOME = environ_get("USERHOME", default=os.path.expanduser("~"))
+PATH_TO_JHBUILDRC = environ_get(
+    "PATH_TO_JHBUILDRC", default=os.path.join(USERHOME + "/.config", "jhbuildrc")
+)
+PREFIX = environ_get("PREFIX", default=os.path.join(USERHOME, "jhbuild"))
+CHECKOUTROOT = environ_get("CHECKOUTROOT", default=os.path.join(USERHOME, "gnome"))
+PROJECT_HOME = environ_get("PROJECT_HOME", default=os.path.join(USERHOME, "dev"))
+PY_VERSION = environ_get("PY_VERSION", default="3.6")
+PY_VERSION_FULL = environ_get("PY_VERSION_FULL", default="{}.5".format(PY_VERSION))
+JHBUILD_GITHUB_URL = environ_get(
+    "JHBUILD_GITHUB_URL", default="https://github.com/GNOME/jhbuild.git"
+)
+JHBUILD_SHA = environ_get("JHBUILD_SHA", default="master")
+PATH_TO_JHBUILD_BIN_PARENT_DIR = environ_get(
+    "PATH_TO_JHBUILD_BIN_PARENT_DIR", default=os.path.join(USERHOME + ".local")
+)
+PATH_TO_JHBUILD_BIN = environ_get(
+    "PATH_TO_JHBUILD_BIN", default=os.path.join(USERHOME + ".local/bin", "jhbuild")
+)
 
 
 BUILD_GTK_DOC = """
@@ -534,11 +543,13 @@ def clone_all():
         k_full_path = os.path.join(CHECKOUTROOT, k)
         git_clone(v["repo"], k_full_path, sha=v["branch"])
 
+
 def clone_one(filter):
     for k, v in repo_git_dicts.items():
         if filter in k:
             k_full_path = os.path.join(CHECKOUTROOT, k)
             git_clone(v["repo"], k_full_path, sha=v["branch"])
+
 
 def get_tar_files():
     for k, v in repo_tar_dicts.items():
@@ -603,13 +614,17 @@ def compile_jhbuild():
         Console.message("check if folder is a git repo")
         if scm(PREFIX) == "git":
             with cd(PREFIX):
-                _autogen_cmd = "./autogen.sh --prefix={}/.local".format(USERHOME)
+                _autogen_cmd = "./autogen.sh --prefix={}".format(
+                    PATH_TO_JHBUILD_BIN_PARENT_DIR
+                )
                 _popen_stdout(_autogen_cmd, cwd=PREFIX)
                 _make_cmd = "make"
                 _popen_stdout(_make_cmd, cwd=PREFIX)
                 _make_install_cmd = "make install"
                 _popen_stdout(_make_install_cmd, cwd=PREFIX)
-                _test_jhbuild = "~/.local/bin/jhbuild --help"
+                _test_jhbuild = "{}/bin/jhbuild --help".format(
+                    PATH_TO_JHBUILD_BIN_PARENT_DIR
+                )
                 _popen_stdout(_test_jhbuild, cwd=PREFIX)
 
 
@@ -688,8 +703,8 @@ def environ_set(key, value):
     os.environ[key] = value
 
 
-def environ_get(key):
-    return os.environ.get(key)
+def environ_get(key, default=None):
+    return os.environ.get(key, default=default)
 
 
 def path_append(value):
@@ -864,16 +879,22 @@ def setup_all_envs():
 
 
 def write_jhbuildrc(use_system=False):
-    print("MAKING DIR IF IT DOESN'T EXIST: {}".format(os.path.abspath(os.path.join(PATH_TO_JHBUILDRC, os.pardir))))
+    print(
+        "MAKING DIR IF IT DOESN'T EXIST: {}".format(
+            os.path.abspath(os.path.join(PATH_TO_JHBUILDRC, os.pardir))
+        )
+    )
     mkdir_p(os.path.abspath(os.path.join(PATH_TO_JHBUILDRC, os.pardir)))
     rendered_jhbuild = render_jhbuildrc_dry_run(use_system=use_system)
     with open(PATH_TO_JHBUILDRC, "w+") as fp:
         fp.write(rendered_jhbuild)
 
+
 def write_ldconfig(use_system=False):
     print("WRITING ldconfig: {}".format(SYSTEM_LDCONFIG_FILE))
     with open(SYSTEM_LDCONFIG_FILE, "w+") as fp:
         fp.write(LDCONFIG_AFTER_DEB)
+
 
 def render_jhbuildrc_dry_run(use_system=False):
     print("USE_SYSTEM = {}".format(use_system))
@@ -1010,7 +1031,13 @@ if __name__ == "__main__":
         help="cmd to run. Options [bootstrap, dump_env, compile, render-dry-run, render, pip-install-meson, compile-gtk-doc, clone-all, get-all-tar-files, untar-files, build, compile-all, clone-one]",
     )
     parser.add_argument("--pkg", type=str, required=False, help="Package name.")
-    parser.add_argument("--system", action = 'store_true', required=False, default=False, help="Set this flag if you want to do a system wide install")
+    parser.add_argument(
+        "--system",
+        action="store_true",
+        required=False,
+        default=False,
+        help="Set this flag if you want to do a system wide install",
+    )
 
     args, extra_args = parser.parse_known_args()
 

@@ -19,8 +19,8 @@ import argparse
 import os
 import sys
 
-COMPRESSIBLE_EXTENSIONS = ['.html', '.js', '.css', '.svg']
-BASE_DIR = 'WebInspectorUI/'
+COMPRESSIBLE_EXTENSIONS = [".html", ".js", ".css", ".svg"]
+BASE_DIR = "WebInspectorUI/"
 
 
 def get_filenames(args):
@@ -29,7 +29,7 @@ def get_filenames(args):
     for filename in args:
         base_dir_index = filename.rfind(BASE_DIR)
         if base_dir_index != -1:
-            filenames.append(filename[base_dir_index + len(BASE_DIR):])
+            filenames.append(filename[base_dir_index + len(BASE_DIR) :])
     return filenames
 
 
@@ -38,32 +38,41 @@ def is_compressible(filename):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Generate a GResources file for the inspector.')
-    parser.add_argument('--output', nargs='?', type=argparse.FileType('w'), default=sys.stdout,
-                        help='the output file')
-    parser.add_argument('filenames', metavar='FILES', nargs='+',
-                        help='the list of files to include')
+    parser = argparse.ArgumentParser(
+        description="Generate a GResources file for the inspector."
+    )
+    parser.add_argument(
+        "--output",
+        nargs="?",
+        type=argparse.FileType("w"),
+        default=sys.stdout,
+        help="the output file",
+    )
+    parser.add_argument(
+        "filenames", metavar="FILES", nargs="+", help="the list of files to include"
+    )
 
     args = parser.parse_args(sys.argv[1:])
 
-    args.output.write(\
-    """<?xml version=1.0 encoding=UTF-8?>
+    args.output.write(
+        """<?xml version=1.0 encoding=UTF-8?>
     <gresources>
         <gresource prefix="/org/webkitgtk/inspector">
-""")
+"""
+    )
 
     for filename in get_filenames(args.filenames):
-        line = '            <file'
+        line = "            <file"
         if is_compressible(filename):
             line += ' compressed="true"'
-        if 'Images/gtk/' in filename:
-            line += ' alias="%s"' % filename.replace('gtk/', '')
-        line += '>%s</file>\n' % filename
+        if "Images/gtk/" in filename:
+            line += ' alias="%s"' % filename.replace("gtk/", "")
+        line += ">%s</file>\n" % filename
 
         args.output.write(line)
 
-    args.output.write(\
-    """    </gresource>
+    args.output.write(
+        """    </gresource>
 </gresources>
-""")
-
+"""
+    )

@@ -19,11 +19,10 @@ def dbus_launch_session():
     # except (subprocess.CalledProcessError, OSError):
     #     return (-1, "")
 
-
     try:
-        out = subprocess.check_output([
-            "dbus-daemon", "--session", "--fork", "--print-address=1",
-            "--print-pid=1"])
+        out = subprocess.check_output(
+            ["dbus-daemon", "--session", "--fork", "--print-address=1", "--print-pid=1"]
+        )
     except (subprocess.CalledProcessError, OSError):
         return (-1, "")
     else:
@@ -31,6 +30,7 @@ def dbus_launch_session():
             out = out.decode("utf-8")
         addr, pid = out.splitlines()
         return int(pid), addr
+
 
 pid, addr = dbus_launch_session()
 if pid >= 0:

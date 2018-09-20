@@ -25,13 +25,13 @@ top_level_dir = None
 build_dir = None
 library_build_dir = None
 binary_build_dir = None
-build_types = ('Release', 'Debug')
+build_types = ("Release", "Debug")
 
 
 def top_level_path(*args):
     global top_level_dir
     if not top_level_dir:
-        top_level_dir = os.path.join(os.path.dirname(__file__), '..', '..')
+        top_level_dir = os.path.join(os.path.dirname(__file__), "..", "..")
     return os.path.join(*(top_level_dir,) + args)
 
 
@@ -43,14 +43,14 @@ def set_build_types(new_build_types):
 def library_build_path(*args):
     global library_build_dir
     if not library_build_dir:
-        library_build_dir = build_path('lib', *args)
+        library_build_dir = build_path("lib", *args)
     return library_build_dir
 
 
 def binary_build_path(*args):
     global binary_build_dir
     if not binary_build_dir:
-        binary_build_dir = build_path('bin', *args)
+        binary_build_dir = build_path("bin", *args)
     return binary_build_dir
 
 
@@ -60,10 +60,15 @@ def get_build_path(fatal=True):
         return build_dir
 
     def is_valid_build_directory(path):
-        return os.path.exists(os.path.join(path, 'CMakeCache.txt')) or \
-            os.path.exists(os.path.join(path, 'bin/MiniBrowser'))
+        return os.path.exists(os.path.join(path, "CMakeCache.txt")) or os.path.exists(
+            os.path.join(path, "bin/MiniBrowser")
+        )
 
-    if len(sys.argv[1:]) > 1 and os.path.exists(sys.argv[-1]) and is_valid_build_directory(sys.argv[-1]):
+    if (
+        len(sys.argv[1:]) > 1
+        and os.path.exists(sys.argv[-1])
+        and is_valid_build_directory(sys.argv[-1])
+    ):
         return sys.argv[-1]
 
     # Debian and Ubuntu build both flavours of the library (with gtk2
@@ -77,7 +82,7 @@ def get_build_path(fatal=True):
 
     global build_types
     for build_type in build_types:
-        build_dir = top_level_path('WebKitBuild', build_type)
+        build_dir = top_level_path("WebKitBuild", build_type)
         if is_valid_build_directory(build_dir):
             return build_dir
 
@@ -94,7 +99,7 @@ def get_build_path(fatal=True):
     if is_valid_build_directory(build_dir):
         return build_dir
 
-    print('Could not determine build directory.')
+    print("Could not determine build directory.")
     if fatal:
         sys.exit(1)
 
@@ -104,8 +109,9 @@ def build_path(*args):
 
 
 def pkg_config_file_variable(package, variable):
-    process = subprocess.Popen(['pkg-config', '--variable=%s' % variable, package],
-                               stdout=subprocess.PIPE)
+    process = subprocess.Popen(
+        ["pkg-config", "--variable=%s" % variable, package], stdout=subprocess.PIPE
+    )
     stdout = process.communicate()[0].decode("utf-8")
     if process.returncode:
         return None
@@ -113,18 +119,22 @@ def pkg_config_file_variable(package, variable):
 
 
 def prefix_of_pkg_config_file(package):
-    return pkg_config_file_variable(package, 'prefix')
+    return pkg_config_file_variable(package, "prefix")
 
 
 def parse_output_lines(fd, parse_line_callback):
-    output = ''
+    output = ""
     read_set = [fd]
     while read_set:
         try:
             rlist, wlist, xlist = select.select(read_set, [], [])
         except select.error as e:
-            parse_line_callback("WARNING: error while waiting for fd %d to become readable\n" % fd)
-            parse_line_callback("    error code: %d, error message: %s\n" % (e[0], e[1]))
+            parse_line_callback(
+                "WARNING: error while waiting for fd %d to become readable\n" % fd
+            )
+            parse_line_callback(
+                "    error code: %d, error message: %s\n" % (e[0], e[1])
+            )
             continue
 
         if fd in rlist:
@@ -133,18 +143,18 @@ def parse_output_lines(fd, parse_line_callback):
             except OSError as e:
                 if e.errno == errno.EIO:
                     # Child process finished.
-                    chunk = ''
+                    chunk = ""
                 else:
                     raise e
             if not chunk:
                 read_set.remove(fd)
 
             output += chunk
-            while '\n' in output:
-                pos = output.find('\n')
-                parse_line_callback(output[:pos + 1])
-                output = output[pos + 1:]
+            while "\n" in output:
+                pos = output.find("\n")
+                parse_line_callback(output[: pos + 1])
+                output = output[pos + 1 :]
 
             if not chunk and output:
                 parse_line_callback(output)
-                output = ''
+                output = ""

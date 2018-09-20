@@ -17,7 +17,7 @@
 
 # SOURCE: https://gitlab.apertis.org/hmi/webkit-gtk-clutter/blob/21d5f3394e7dc40e33d1e746fe3dc7a344ca1645/Tools/gtk/make-dist.py
 
-from __future__ import print_function
+
 from contextlib import closing
 
 import argparse
@@ -122,7 +122,7 @@ class Directory(object):
             def passes_all_rules(entry):
                 return Ruleset.global_rules().passes(entry) and self.rules.passes(entry)
 
-            to_keep = filter(passes_all_rules, dirs)
+            to_keep = list(filter(passes_all_rules, dirs))
             del dirs[:]
             dirs.extend(to_keep)
 
@@ -250,7 +250,7 @@ class Distcheck(object):
         def create_dir(directory, directory_type):
             try:
                 os.mkdir(directory)
-            except OSError, e:
+            except OSError as e:
                 if e.errno != errno.EEXIST or not os.path.isdir(directory):
                     raise Exception("Could not create %s dir at %s: %s" % (directory_type, directory, str(e)))
 
