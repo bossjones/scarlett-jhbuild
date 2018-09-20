@@ -365,7 +365,7 @@ os.environ['XDG_DATA_DIRS'] = '{XDG_DATA_DIRS}'
 os.environ['XDG_CONFIG_DIRS'] = '{XDG_CONFIG_DIRS}'
 os.environ['CC'] = 'gcc'
 os.environ['PROJECT_HOME'] = '{PROJECT_HOME}'
-# os.environ['PYTHONSTARTUP'] = '{PYTHONSTARTUP}'
+os.environ['PYTHONSTARTUP'] = '{PYTHONSTARTUP}'
 os.environ['GI_TYPELIB_PATH'] = '{PREFIX}/lib/girepository-1.0'
 """
 
@@ -379,7 +379,9 @@ modulesets_dir = '{PREFIX}/modulesets'
 moduleset = 'scarlett-apps-3.28.modules'
 modules = [ 'python-365', 'glib', 'fribidi', 'gobject-introspection', 'gstreamer', 'gst-libav', 'gst-plugins-bad', 'gst-plugins-base', 'gst-plugins-good', 'gst-plugins-ugly', 'gst-python', 'gtk+-3', 'pycairo', 'pygobject' ]
 module_mesonargs['gstreamer'] = '-Ddisable_gtkdoc=true -Dgtk_doc=false'
-autogenargs='--disable-gtk-doc'
+# We always enable introspection so that we can sniff out problems with our
+# annotations sooner rather than later.
+autogenargs='--disable-gtk-doc --enable-introspection'
 skip = [ "WebKit" ]
 interact = False
 makeargs = '-j4'
@@ -405,7 +407,6 @@ os.environ['XDG_DATA_DIRS'] = '{XDG_DATA_DIRS}'
 os.environ['XDG_CONFIG_DIRS'] = '{XDG_CONFIG_DIRS}'
 os.environ['CC'] = 'gcc'
 os.environ['PROJECT_HOME'] = '{PROJECT_HOME}'
-os.environ['PYTHONSTARTUP'] = '{PYTHONSTARTUP}'
 os.environ['GI_TYPELIB_PATH'] = '{PREFIX}/lib/girepository-1.0'
 """
 
