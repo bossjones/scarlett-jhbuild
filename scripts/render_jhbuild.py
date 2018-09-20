@@ -373,10 +373,9 @@ JHBUILD_SYSTEM_TEMPLATE = """
 # -*- mode: python -*-
 # -*- coding: utf-8 -*-
 import os
-prefix='/opt/scarlett-jhbuild/jhbuild'
-checkoutroot='/opt/gnome'
-modulesets_dir = prefix + '/modulesets'
-# moduleset = 'scarlett-world-lean.modules'
+prefix='{PREFIX}'
+checkoutroot='{CHECKOUTROOT}'
+modulesets_dir = '{PREFIX}/modulesets'
 moduleset = 'scarlett-apps-3.28.modules'
 modules = [ 'python-365', 'glib', 'fribidi', 'gobject-introspection', 'gstreamer', 'gst-libav', 'gst-plugins-bad', 'gst-plugins-base', 'gst-plugins-good', 'gst-plugins-ugly', 'gst-python', 'gtk+-3', 'pycairo', 'pygobject' ]
 module_mesonargs['gstreamer'] = '-Ddisable_gtkdoc=true -Dgtk_doc=false'
