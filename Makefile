@@ -67,6 +67,9 @@ compile_jhbuild:
 render:
 	python scripts/render_jhbuild.py --cmd render
 
+render-system:
+	python scripts/render_jhbuild.py --cmd render --system
+
 jhbuild_list:
 	jhbuild list
 
