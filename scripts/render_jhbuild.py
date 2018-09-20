@@ -876,6 +876,7 @@ def write_ldconfig(use_system=False):
 
 
 def render_jhbuildrc_dry_run(use_system=False):
+    print("USE_SYSTEM = {}".format(use_system))
     if use_system:
         # USERNAME = "/opt/"
         # USERHOME = "/opt/"
