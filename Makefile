@@ -68,7 +68,10 @@ render:
 	python scripts/render_jhbuild.py --cmd render
 
 render-system:
+	sudo touch /etc/ld.so.conf.d/jhbuild-scarlett-deps-x86_64.conf
+	sudo chown $(shell id -u):$(shell id -u) -R /etc/ld.so.conf.d/jhbuild-scarlett-deps-x86_64.conf
 	python scripts/render_jhbuild.py --cmd render --system
+	sudo chown root:root -R /etc/ld.so.conf.d/jhbuild-scarlett-deps-x86_64.conf
 
 jhbuild_list:
 	jhbuild list
