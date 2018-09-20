@@ -25,17 +25,17 @@ elif PY3:
 
 USE_SYSTEM = False
 
-USERNAME = getpass.getuser()
-USERHOME = os.path.expanduser("~")
-PATH_TO_JHBUILDRC = os.path.join(USERHOME + "/.config", "jhbuildrc")
-PREFIX = os.path.join(USERHOME, "jhbuild")
-CHECKOUTROOT = os.path.join(USERHOME, "gnome")
-PROJECT_HOME = os.path.join(USERHOME, "dev")
-PY_VERSION = "3.6"
-PY_VERSION_FULL = "{}.5".format(PY_VERSION)
-JHBUILD_GITHUB_URL = "https://github.com/GNOME/jhbuild.git"
-JHBUILD_SHA = "master"
-PATH_TO_JHBUILD_BIN = os.path.join(USERHOME + ".local/bin", "jhbuild")
+USERNAME = os.environ.get("USERNAME", default=getpass.getuser())
+USERHOME = os.environ.get("USERHOME", os.path.expanduser("~"))
+PATH_TO_JHBUILDRC = os.environ.get("PATH_TO_JHBUILDRC", os.path.join(USERHOME + "/.config", "jhbuildrc"))
+PREFIX = os.environ.get("PREFIX", os.path.join(USERHOME, "jhbuild"))
+CHECKOUTROOT = os.environ.get("CHECKOUTROOT", os.path.join(USERHOME, "gnome"))
+PROJECT_HOME = os.environ.get("PROJECT_HOME", os.path.join(USERHOME, "dev"))
+PY_VERSION = os.environ.get("PY_VERSION", "3.6")
+PY_VERSION_FULL = os.environ.get("PY_VERSION_FULL", "{}.5".format(PY_VERSION))
+JHBUILD_GITHUB_URL = os.environ.get("JHBUILD_GITHUB_URL", "https://github.com/GNOME/jhbuild.git")
+JHBUILD_SHA = os.environ.get("JHBUILD_SHA", "master")
+PATH_TO_JHBUILD_BIN = os.environ.get("PATH_TO_JHBUILD_BIN", os.path.join(USERHOME + ".local/bin", "jhbuild"))
 
 
 BUILD_GTK_DOC = """
