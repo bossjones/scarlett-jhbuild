@@ -866,6 +866,8 @@ def setup_all_envs():
 def write_jhbuildrc(use_system=False):
     print("MAKING DIR IF IT DOESN'T EXIST: {}".format(os.path.abspath(os.path.join(PATH_TO_JHBUILDRC, os.pardir))))
     mkdir_p(os.path.abspath(os.path.join(PATH_TO_JHBUILDRC, os.pardir)))
+
+
     rendered_jhbuild = render_jhbuildrc_dry_run(use_system=use_system)
     with open(PATH_TO_JHBUILDRC, "w+") as fp:
         fp.write(rendered_jhbuild)
@@ -948,8 +950,8 @@ def render_jhbuildrc_dry_run(use_system=False):
             PROJECT_HOME=environ_get("PROJECT_HOME"),
             PYTHONSTARTUP=environ_get("PYTHONSTARTUP"),
         )
-    Console.message("----------------[render_jhbuildrc_dry_run]----------------")
-    Console.message(rendered_jhbuild)
+        Console.message("----------------[render_jhbuildrc_dry_run]----------------")
+        Console.message(rendered_jhbuild)
 
     return rendered_jhbuild
 
