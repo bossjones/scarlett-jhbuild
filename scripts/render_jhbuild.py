@@ -704,7 +704,12 @@ def environ_set(key, value):
 
 
 def environ_get(key, default=None):
-    return os.environ.get(key, default=default)
+    retval = os.environ.get(key, default=default)
+
+    if key not in os.environ:
+        print("environ_get: Env Var not defined! Using default! Attempted={}, default={}".format(key, default))
+
+    return retval
 
 
 def path_append(value):
