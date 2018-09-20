@@ -410,6 +410,13 @@ os.environ['PYTHONSTARTUP'] = '{PYTHONSTARTUP}'
 os.environ['GI_TYPELIB_PATH'] = '{PREFIX}/lib/girepository-1.0'
 """
 
+SYSTEM_LDCONFIG_FILE = "/etc/ld.so.conf.d/jhbuild-scarlett-deps-x86_64.conf"
+
+LDCONFIG_AFTER_DEB = """
+/opt/scarlett-jhbuild/jhbuild/lib
+/opt/jhbuild/.local/lib
+"""
+
 
 # SOURCE: https://github.com/ARMmbed/mbed-cli/blob/f168237fabd0e32edcb48e214fc6ce2250046ab3/test/util.py
 # Process execution
@@ -863,6 +870,10 @@ def write_jhbuildrc(use_system=False):
     with open(PATH_TO_JHBUILDRC, "w+") as fp:
         fp.write(rendered_jhbuild)
 
+def write_ldconfig(use_system=False):
+    with open(SYSTEM_LDCONFIG_FILE, "w+") as fp:
+        fp.write(LDCONFIG_AFTER_DEB)
+
 
 def render_jhbuildrc_dry_run(use_system=False):
     if use_system:
@@ -1006,6 +1017,7 @@ def main(context):
 
         render_jhbuildrc_dry_run(use_system=use_system)
         write_jhbuildrc(use_system=use_system)
+        write_ldconfig(use_system=use_system)
     elif context["cmd"] == "pip-install-meson":
         pip_install_meson()
     elif context["cmd"] == "compile-gtk-doc":
