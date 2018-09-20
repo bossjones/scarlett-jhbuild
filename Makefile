@@ -70,7 +70,7 @@ render:
 render-system:
 	sudo touch /etc/ld.so.conf.d/jhbuild-scarlett-deps-x86_64.conf
 	sudo chown $(shell id -u):$(shell id -u) -R /etc/ld.so.conf.d/jhbuild-scarlett-deps-x86_64.conf
-	python scripts/render_jhbuild.py --cmd render --system
+	python scripts/render_jhbuild.py --system --cmd render
 	sudo chown root:root -R /etc/ld.so.conf.d/jhbuild-scarlett-deps-x86_64.conf
 
 jhbuild_list:
