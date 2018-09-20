@@ -179,3 +179,34 @@
         - { name: "rbenv-aliases",      repo: "https://github.com/tpope/rbenv-aliases.git",      version: "master" }
 
       rbenv_root: "{% if rbenv.env == 'system' %}/usr/local/rbenv{% else %}~/.rbenv{% endif %}"
+
+
+
+  tasks:
+  - name: Append runserver_plus .bashrc alias
+    lineinfile:
+      dest: "{{ ansible_env.HOME }}/.bashrc"
+      line: "{{ item }}"
+    with_items:
+    - 'export LANG=C.UTF-8'
+    - 'export PATH="~/.local/bin:${PATH}"'
+    - 'export PATH="~/jhbuild/bin:${PATH}"'
+    - 'export PATH="/usr/lib/ccache:${PATH}"'
+    - 'export PATH="/usr/lib/ccache:${PATH}"'
+    - 'export PATH="/usr/share/bcc/tools:${PATH}"'
+    - 'eval "$(rbenv init -)"'
+    - 'export PATH="/usr/share/bcc/tools:${PATH}"'
+
+
+
+    # - name: Set locale variables
+    #   become: false
+    #   lineinfile: >
+    #     dest="{{ ansible_env.HOME }}/.bashrc"
+    #     line="export {{ item }}"
+    #     insertafter=EOF
+    #     state=present
+    #   with_items:
+    #     - "LANG=en_US.UTF-8"
+    #     - "LANGUAGE=en_US:en"
+    #     - "LC_ALL=en_US.UTF-8"

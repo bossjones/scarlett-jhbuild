@@ -265,6 +265,10 @@ Vagrant.configure(2) do |config|
       echo "deb https://repo.iovisor.org/apt/bionic bionic main" | tee /etc/apt/sources.list.d/iovisor.list
       apt-get update
       apt-get install bcc-tools libbcc-examples linux-headers-$(uname -r) -y
+      sysctl net.ipv4.tcp_available_congestion_control
+      echo net.core.default_qdisc=fq >> /etc/sysctl.d/30-tcp_congestion_control.conf
+      echo net.ipv4.tcp_congestion_control=bbr >> /etc/sysctl.d/30-tcp_congestion_control.conf
+      sysctl -p
       SHELL
       s.privileged = true
     end
@@ -273,5 +277,16 @@ Vagrant.configure(2) do |config|
         ansible.playbook = "site.yml"
         ansible.verbose = "vvvv"
     end
+
+
+
+    config.vm.provision 'shell' do |s|
+      s.inline = <<-SHELL
+      usermod -G adm,tty,audio vagrant
+      usermod -aG docker vagrant
+      SHELL
+      s.privileged = true
+    end
+
   end
 end
