@@ -278,15 +278,13 @@ Vagrant.configure(2) do |config|
         ansible.verbose = "vvvv"
     end
 
-
-
-    config.vm.provision 'shell' do |s|
-      s.inline = <<-SHELL
-      usermod -G adm,tty,audio vagrant
-      usermod -aG docker vagrant
-      SHELL
-      s.privileged = true
-    end
+    # config.vm.provision 'shell' do |s|
+    #   s.inline = <<-SHELL
+    #   usermod -G adm,tty,audio vagrant
+    #   usermod -aG docker vagrant
+    #   SHELL
+    #   s.privileged = true
+    # end
 
   end
 end
