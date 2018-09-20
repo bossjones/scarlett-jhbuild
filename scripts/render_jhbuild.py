@@ -23,6 +23,8 @@ if PY2:
 elif PY3:
     from urllib.parse import urlparse
 
+USE_SYSTEM = False
+
 USERNAME = getpass.getuser()
 USERHOME = os.path.expanduser("~")
 PATH_TO_JHBUILDRC = os.path.join(USERHOME + "/.config", "jhbuildrc")
@@ -864,42 +866,57 @@ def write_jhbuildrc(use_system=False):
 
 def render_jhbuildrc_dry_run(use_system=False):
     if use_system:
-        USERNAME = "/opt/"
-        USERHOME = "/opt/"
-        PATH_TO_JHBUILDRC = os.path.join("/etc/scarlett-jhbuild/jhbuildrc")
-        PREFIX = os.path.join(USERHOME, "scarlett-jhbuild", "jhbuild")
-        CHECKOUTROOT = os.path.join(USERHOME, "gnome")
-        PROJECT_HOME = os.path.join(USERHOME, "scarlett-jhbuild", "dev")
-        PY_VERSION = "3.6"
-        PY_VERSION_FULL = "{}.5".format(PY_VERSION)
-        JHBUILD_GITHUB_URL = "https://github.com/GNOME/jhbuild.git"
-        JHBUILD_SHA = "master"
-        PATH_TO_JHBUILD_BIN = os.path.join(USERHOME + "jhbuild/.local/bin", "jhbuild")
-        CFLAGS = '-fPIC -O0 -ggdb -fno-inline -fno-omit-frame-pointer'
-        PYTHON_VERSION = '3.6'
-        PATH = '/usr/lib/ccache:/opt/scarlett-jhbuild/jhbuild/bin:~/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
-        LD_LIBRARY_PATH = '/opt/scarlett-jhbuild/jhbuild/lib:/usr/lib'
-        PYTHONPATH = '/opt/scarlett-jhbuild/jhbuild/lib/python3.6/site-packages'
-        PKG_CONFIG_PATH = '/opt/scarlett-jhbuild/jhbuild/lib/pkgconfig:/opt/scarlett-jhbuild/jhbuild/share/pkgconfig:/usr/lib/pkgconfig'
-        # -------------------------------------------------
-        XDG_DATA_DIRS = '/opt/scarlett-jhbuild/jhbuild/share:/usr/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop'
-        XDG_CONFIG_DIRS = '/opt/scarlett-jhbuild/jhbuild/etc/xdg'
-        CC = 'gcc'
-        PROJECT_HOME = '/opt/scarlett-jhbuild/dev'
-        GI_TYPELIB_PATH = '/opt/scarlett-jhbuild/jhbuild/lib/girepository-1.0'
+        # USERNAME = "/opt/"
+        # USERHOME = "/opt/"
+        # PATH_TO_JHBUILDRC = os.path.join("/etc/scarlett-jhbuild/jhbuildrc")
+        # PREFIX = os.path.join(USERHOME, "scarlett-jhbuild", "jhbuild")
+        # CHECKOUTROOT = os.path.join(USERHOME, "gnome")
+        # PROJECT_HOME = os.path.join(USERHOME, "scarlett-jhbuild", "dev")
+        # PY_VERSION = "3.6"
+        # PY_VERSION_FULL = "{}.5".format(PY_VERSION)
+        # JHBUILD_GITHUB_URL = "https://github.com/GNOME/jhbuild.git"
+        # JHBUILD_SHA = "master"
+        # PATH_TO_JHBUILD_BIN = os.path.join(USERHOME + "jhbuild/.local/bin", "jhbuild")
+        # CFLAGS = '-fPIC -O0 -ggdb -fno-inline -fno-omit-frame-pointer'
+        # PYTHON_VERSION = '3.6'
+        # PATH = '/usr/lib/ccache:/opt/scarlett-jhbuild/jhbuild/bin:~/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+        # LD_LIBRARY_PATH = '/opt/scarlett-jhbuild/jhbuild/lib:/usr/lib'
+        # PYTHONPATH = '/opt/scarlett-jhbuild/jhbuild/lib/python3.6/site-packages'
+        # PKG_CONFIG_PATH = '/opt/scarlett-jhbuild/jhbuild/lib/pkgconfig:/opt/scarlett-jhbuild/jhbuild/share/pkgconfig:/usr/lib/pkgconfig'
+        # # -------------------------------------------------
+        # XDG_DATA_DIRS = '/opt/scarlett-jhbuild/jhbuild/share:/usr/share:/usr/local/share:/usr/share:/var/lib/snapd/desktop'
+        # XDG_CONFIG_DIRS = '/opt/scarlett-jhbuild/jhbuild/etc/xdg'
+        # CC = 'gcc'
+        # PROJECT_HOME = '/opt/scarlett-jhbuild/dev'
+        # GI_TYPELIB_PATH = '/opt/scarlett-jhbuild/jhbuild/lib/girepository-1.0'
+
+        # rendered_jhbuild = JHBUILD_SYSTEM_TEMPLATE.format(
+        #     PREFIX=PREFIX,
+        #     CHECKOUTROOT=CHECKOUTROOT,
+        #     CFLAGS=CFLAGS,
+        #     PYTHON_VERSION=PYTHON_VERSION,
+        #     PATH=PATH,
+        #     LD_LIBRARY_PATH=LD_LIBRARY_PATH,
+        #     PYTHONPATH=PYTHONPATH,
+        #     PKG_CONFIG_PATH=PKG_CONFIG_PATH,
+        #     XDG_DATA_DIRS=XDG_DATA_DIRS,
+        #     XDG_CONFIG_DIRS=XDG_CONFIG_DIRS,
+        #     PROJECT_HOME=PROJECT_HOME
+        # )
 
         rendered_jhbuild = JHBUILD_SYSTEM_TEMPLATE.format(
-            PREFIX=PREFIX,
-            CHECKOUTROOT=CHECKOUTROOT,
-            CFLAGS=CFLAGS,
-            PYTHON_VERSION=PYTHON_VERSION,
-            PATH=PATH,
-            LD_LIBRARY_PATH=LD_LIBRARY_PATH,
-            PYTHONPATH=PYTHONPATH,
-            PKG_CONFIG_PATH=PKG_CONFIG_PATH,
-            XDG_DATA_DIRS=XDG_DATA_DIRS,
-            XDG_CONFIG_DIRS=XDG_CONFIG_DIRS,
-            PROJECT_HOME=PROJECT_HOME
+            PREFIX=environ_get("PREFIX"),
+            CHECKOUTROOT=environ_get("CHECKOUTROOT"),
+            CFLAGS=environ_get("CFLAGS"),
+            PYTHON_VERSION=environ_get("PYTHON_VERSION"),
+            PATH=environ_get("PATH"),
+            LD_LIBRARY_PATH=environ_get("LD_LIBRARY_PATH"),
+            PYTHONPATH=environ_get("PYTHONPATH"),
+            PKG_CONFIG_PATH=environ_get("PKG_CONFIG_PATH"),
+            XDG_DATA_DIRS=environ_get("XDG_DATA_DIRS"),
+            XDG_CONFIG_DIRS=environ_get("XDG_CONFIG_DIRS"),
+            PROJECT_HOME=environ_get("PROJECT_HOME"),
+            PYTHONSTARTUP=environ_get("PYTHONSTARTUP"),
         )
         Console.message("----------------[render_jhbuildrc_system]----------------")
         Console.message(rendered_jhbuild)
