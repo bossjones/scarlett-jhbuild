@@ -163,7 +163,7 @@ services:
         ports:
             - "4110:4110/tcp"
         networks:
-            - todo
+            - traefik_proxy
         labels:
         - "traefik.frontend.rule=Host:whoami.hyenalab.home"
 
