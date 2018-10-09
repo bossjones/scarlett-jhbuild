@@ -59,18 +59,18 @@ docker_run:
 bootstrap: jhbuild_bootstrap render link_modulesets jhbuild_list
 
 jhbuild_bootstrap:
-	python scripts/render_jhbuild.py --cmd bootstrap
+	python3 scripts/render_jhbuild.py --cmd bootstrap
 
 compile_jhbuild:
-	python scripts/render_jhbuild.py --cmd compile
+	python3 scripts/render_jhbuild.py --cmd compile
 
 render:
-	python scripts/render_jhbuild.py --cmd render
+	python3 scripts/render_jhbuild.py --cmd render
 
 render-system:
 	sudo touch /etc/ld.so.conf.d/jhbuild-scarlett-deps-x86_64.conf
 	sudo chown $(shell id -u):$(shell id -u) -R /etc/ld.so.conf.d/jhbuild-scarlett-deps-x86_64.conf
-	python scripts/render_jhbuild.py --system --cmd render
+	python3 scripts/render_jhbuild.py --system --cmd render
 	sudo chown root:root -R /etc/ld.so.conf.d/jhbuild-scarlett-deps-x86_64.conf
 
 jhbuild_list:
@@ -83,10 +83,10 @@ create-full-local-hierachy:
 	bash scripts/create-full-local-hierachy.sh
 
 clone-sphinx:
-	python scripts/render_jhbuild.py --cmd clone-one --pkg sphinxbase
+	python3 scripts/render_jhbuild.py --cmd clone-one --pkg sphinxbase
 
 clone-pocketsphinx:
-	python scripts/render_jhbuild.py --cmd clone-one --pkg pocketsphinx
+	python3 scripts/render_jhbuild.py --cmd clone-one --pkg pocketsphinx
 
 mv-sphinx:
 	mv -fv ~/gnome/* ~/src/
