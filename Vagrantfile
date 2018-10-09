@@ -2,7 +2,6 @@
 # vi: set ft=ruby :
 
 Vagrant.configure(2) do |config|
-
   # set auto_update to false, if you do NOT want to check the correct
   # additions version when booting this machine
   config.vbguest.auto_update = true
@@ -10,12 +9,12 @@ Vagrant.configure(2) do |config|
   # do NOT download the iso file from a webserver
   config.vbguest.no_remote = false
 
-  config.vm.define "scarlett-jhbuild" do |master|
+  config.vm.define 'scarlett-jhbuild' do |master|
     # Every Vagrant development environment requires a box. You can search for
     # boxes at https://atlas.hashicorp.com/search.
-    #master.vm.box = "ubuntu/trusty64"
+    # master.vm.box = "ubuntu/trusty64"
     # For Xenial
-    master.vm.box = "ubuntu/bionic64"
+    master.vm.box = 'ubuntu/bionic64'
     # On Centos the interfaces are not eth0 ... change the playbooks!
     # master.vm.box = "bento/centos-7.5"
 
@@ -31,15 +30,15 @@ Vagrant.configure(2) do |config|
     # within the machine from a port on the host machine. In the example below,
     # accessing "localhost:8080" will access port 80 on the guest machine.
     # DNSMASQ
-    master.vm.network "forwarded_port", guest: 53, host: 5300
+    master.vm.network 'forwarded_port', guest: 53, host: 5300
     # NETDATA
-    master.vm.network "forwarded_port", guest: 19999, host: 29999
+    master.vm.network 'forwarded_port', guest: 19999, host: 29999
 
-    master.vm.network "forwarded_port", guest: 7777, host: 7777
+    master.vm.network 'forwarded_port', guest: 7777, host: 7777
 
     # Create a private network, which allows host-only access to the machine
     # using a specific IP.
-    master.vm.network "private_network", ip: "10.0.0.10"
+    master.vm.network 'private_network', ip: '10.0.0.10'
 
     # Create a public network, which generally matched to bridged network.
     # Bridged networks make the machine appear as another physical device on
@@ -74,7 +73,7 @@ Vagrant.configure(2) do |config|
       vb.customize ['guestproperty', 'set', :id, '/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold', 10_000]
 
       vb.customize ['modifyvm', :id, '--usb', 'on']
-      vb.customize ['modifyvm', :id, '--audio', 'coreaudio', '--audiocontroller', 'ac97' ]
+      vb.customize ['modifyvm', :id, '--audio', 'coreaudio', '--audiocontroller', 'ac97']
 
       # MAYBE ENBALE THIS?
       # ------------------------------------------------
@@ -91,8 +90,8 @@ Vagrant.configure(2) do |config|
       # ------------------------------------------------
     end
 
-    config.vm.hostname = "scarlett-jhbuild"
-    aliases = %w(scarlett-jhbuild.home scarlett-jhbuild.localdomain scarlett-jhbuild-alias)
+    config.vm.hostname = 'scarlett-jhbuild'
+    aliases = %w[scarlett-jhbuild.home scarlett-jhbuild.localdomain scarlett-jhbuild-alias]
 
     if Vagrant.has_plugin?('vagrant-hostsupdater')
       config.hostsupdater.aliases = aliases
@@ -114,15 +113,15 @@ Vagrant.configure(2) do |config|
     # Provider-specific configuration so you can fine-tune various
     # backing providers for Vagrant. These expose provider-specific options.
     #
-    #master.vm.provider "virtualbox" do |vb|
+    # master.vm.provider "virtualbox" do |vb|
     #  # Customize the amount of memory on the VM:
     #  vb.memory = "2048"
-    #end
+    # end
 
     # Enable provisioning with a shell script. Additional provisioners such as
     # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
     # documentation for more information about their specific syntax and use.
-    master.vm.provision "shell", inline: <<-SHELL
+    master.vm.provision 'shell', inline: <<-SHELL
         sudo apt-get update && sudo apt-get install python htop ncdu -y
     SHELL
 
@@ -145,7 +144,7 @@ Vagrant.configure(2) do |config|
     #     grep -qF 'vagrant - nofile 65536' /etc/security/limits.conf || echo 'vagrant - nofile 65536' >> /etc/security/limits.conf
     # SHELL
 
-# end
+    # end
 
     config.vm.provision 'shell' do |s|
       s.inline = <<-SHELL
@@ -273,9 +272,9 @@ Vagrant.configure(2) do |config|
       s.privileged = true
     end
 
-    master.vm.provision "ansible" do |ansible|
-        ansible.playbook = "site.yml"
-        ansible.verbose = "vvvv"
+    master.vm.provision 'ansible' do |ansible|
+      ansible.playbook = 'site.yml'
+      ansible.verbose = 'vvvv'
     end
 
     # config.vm.provision 'shell' do |s|
@@ -285,6 +284,5 @@ Vagrant.configure(2) do |config|
     #   SHELL
     #   s.privileged = true
     # end
-
   end
 end
