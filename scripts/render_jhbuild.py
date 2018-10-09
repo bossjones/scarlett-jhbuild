@@ -89,10 +89,10 @@ JHBUILD_GITHUB_URL = environ_get(
 )
 JHBUILD_SHA = environ_get("JHBUILD_SHA", default="master")
 PATH_TO_JHBUILD_BIN_PARENT_DIR = environ_get(
-    "PATH_TO_JHBUILD_BIN_PARENT_DIR", default=os.path.join(USERHOME + ".local")
+    "PATH_TO_JHBUILD_BIN_PARENT_DIR", default=os.path.join(USERHOME + "/.local")
 )
 PATH_TO_JHBUILD_BIN = environ_get(
-    "PATH_TO_JHBUILD_BIN", default=os.path.join(USERHOME + ".local/bin", "jhbuild")
+    "PATH_TO_JHBUILD_BIN", default=os.path.join(USERHOME + "/.local/bin", "jhbuild")
 )
 
 
