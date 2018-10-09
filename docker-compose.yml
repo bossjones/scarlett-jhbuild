@@ -125,6 +125,7 @@ services:
         # environment:
         # - CLOUDFLARE_EMAIL=${CLOUDFLARE_EMAIL}
         # - CLOUDFLARE_API_KEY=${CLOUDFLARE_API_KEY}
+        command: --ping --api --docker --docker.domain=hyenalab.home
         labels:
         - "traefik.enable=true"
         - "traefik.backend=traefik"
