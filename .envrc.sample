@@ -10,7 +10,7 @@ SCRIPT=${BASH_SOURCE[0]:-$0}
     && echo \
     && exit 1
 
-
+export USERDIR="${HOME}"
 export CFLAGS='-fPIC -O0 -ggdb -fno-inline -fno-omit-frame-pointer'
 # FIXME: Temp python -> python3
 # export PYTHON=python'
