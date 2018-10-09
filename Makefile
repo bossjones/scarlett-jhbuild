@@ -135,3 +135,7 @@ cp-deb:
 		cp -fv $$file $(CURDIR)/$f; \
 	done; \
 	ls -lta $(CURDIR)/$f; \
+
+.PHONY: cp-envrc
+cp-envrc:
+	cp -av .envrc.sample .envrc
