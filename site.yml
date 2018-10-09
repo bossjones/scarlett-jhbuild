@@ -134,6 +134,8 @@
         - wget
         - mlocate
         - ncdu
+        - direnv
+        - ccache
 
   roles:
     - geerlingguy.pip
@@ -185,8 +187,10 @@
   tasks:
   - name: Append runserver_plus .bashrc alias
     lineinfile:
-      dest: "{{ ansible_env.HOME }}/.bashrc"
+      dest: "/home/{{ bossjones__user }}/.bashrc"
       line: "{{ item }}"
+    become: yes
+    become_user: "{{ bossjones__user }}"
     with_items:
     - 'export LANG=C.UTF-8'
     - 'export PATH="~/.local/bin:${PATH}"'
@@ -195,7 +199,9 @@
     - 'export PATH="/usr/lib/ccache:${PATH}"'
     - 'export PATH="/usr/share/bcc/tools:${PATH}"'
     - 'eval "$(rbenv init -)"'
+    - 'eval "$(direnv hook bash)"'
     - 'export PATH="/usr/share/bcc/tools:${PATH}"'
+
 
 
 
