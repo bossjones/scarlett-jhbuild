@@ -10,6 +10,17 @@ SCRIPT=${BASH_SOURCE[0]:-$0}
     && echo \
     && exit 1
 
+export USERNAME=$(python -c "import getpass; print(getpass.getuser())")
+export USERHOME=$(python -c "import os; print(os.path.expanduser('~'))")
+export PATH_TO_JHBUILDRC=~/.config/jhbuildrc
+export PY_VERSION=3.6
+export PY_VERSION_FULL=${PY_VERSION}.5
+export JHBUILD_GITHUB_URL='https://github.com/GNOME/jhbuild.git'
+export JHBUILD_SHA=master
+export PATH_TO_JHBUILD_BIN_PARENT_DIR=~/.local
+export PATH_TO_JHBUILD_BIN=/opt/scarlett-jhbuild/jhbuild/bin
+
+
 export USERDIR="${HOME}"
 export CFLAGS='-fPIC -O0 -ggdb -fno-inline -fno-omit-frame-pointer'
 # FIXME: Temp python -> python3
